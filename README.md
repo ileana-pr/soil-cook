@@ -23,6 +23,13 @@ python3 -m http.server 8000
 
 ## Deploy
 
-Pushing to `main` deploys the site to GitHub Pages through `.github/workflows/pages.yml`. If the first run fails, turn Pages on: **Settings → Pages → Source: GitHub Actions**, then re-run the workflow.
+Hosted on Vercel as a static site, with no build step.
+
+```sh
+vercel          # first run: links the folder to a Vercel project and makes a preview
+vercel --prod   # deploys to production
+```
+
+To deploy automatically on every push, connect the GitHub repo to the Vercel project (`vercel git connect`, or Project → Settings → Git in the Vercel dashboard).
 
 Prices were checked Oct 23–24, 2026, before shipping and tax.
