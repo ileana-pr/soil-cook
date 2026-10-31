@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Plan organic living-soil batches: whole-bag shopping lists, mix recipe, premix cost, prices and local store call sheet.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Soil Cook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,750&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky tab bar over one working column; each tab is a stack of sections. Tables stack into labelled cards on phones. Yellow fields = editable, as in the sheet. */
+:root {
+  --bg: #f1f3ec;
+  --surface: #ffffff;
+  --fg: #1c231a;
+  --muted: #5f6b58;
+  --line: #d9dfd0;
+  --head: #3f5e3a;
+  --head-fg: #f3f6ee;
+  --sage: #e2ead8;
+  --edit: #fff6d4;
+  --edit-line: #e6d796;
+  --pick: #d9ead3;
+  --pick-line: #7fa86f;
+  --warn: #9a5b0e;
+  --warn-bg: #fbecd6;
+  --bad: #a3372d;
+  --focus: #4f7d3f;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121611; --surface: #1a2018; --fg: #e3e9dc; --muted: #9aa691; --line: #2d3629;
+    --head: #2c4428; --head-fg: #e8efe0; --sage: #222c1f; --edit: #2f2b1a; --edit-line: #5a5230;
+    --pick: #22361f; --pick-line: #6e9a5f; --warn: #e6b062; --warn-bg: #33281a; --bad: #ee8b80; --focus: #9cc98a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121611; --surface: #1a2018; --fg: #e3e9dc; --muted: #9aa691; --line: #2d3629;
+  --head: #2c4428; --head-fg: #e8efe0; --sage: #222c1f; --edit: #2f2b1a; --edit-line: #5a5230;
+  --pick: #22361f; --pick-line: #6e9a5f; --warn: #e6b062; --warn-bg: #33281a; --bad: #ee8b80; --focus: #9cc98a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.45; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--head); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 1120px; margin: 0 auto; }
+.top { background: var(--head); color: var(--head-fg); padding-block: 18px 0; }
+.top h1 { font-family: var(--font-display); font-weight: 750; font-size: clamp(1.5rem, 4vw, 2.1rem); margin: 0; line-height: 1.05; letter-spacing: -0.01em; text-wrap: balance; }
+.top .sub { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin-top: 4px; font-size: 13px; opacity: .85; }
+.status { font-family: var(--font-data); font-size: 12px; }
+nav.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--head); border-bottom: 1px solid var(--line); }
+.tabrow { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.tabrow a { color: var(--head-fg); opacity: .75; text-decoration: none; padding: 12px 14px 10px; white-space: nowrap; border-bottom: 3px solid transparent; font-weight: 700; font-size: 14px; }
+.tabrow a[aria-current="page"] { opacity: 1; border-bottom-color: var(--edit-line); }
+main { padding-block: 22px 72px; }
+#app { display: grid; gap: 22px; }
+section { display: grid; gap: 12px; min-width: 0; }
+h2 { font-family: var(--font-display); font-weight: 750; font-size: 1.3rem; margin: 0; line-height: 1.15; text-wrap: balance; }
+h3 { font-size: 1rem; margin: 0; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 70ch; }
+.small { font-size: 13px; color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.num, td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+a { color: var(--focus); }
+
+.fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px 14px; }
+.field { display: grid; gap: 4px; align-content: start; }
+.field > span { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+input, select, textarea, button { font: inherit; color: inherit; }
+.in { width: 100%; min-width: 0; padding: 7px 9px; border: 1px solid var(--edit-line); background: var(--edit); border-radius: 6px; }
+.in.num { text-align: right; }
+.in.sm { max-width: 110px; }
+textarea.in { resize: vertical; min-height: 38px; }
+.in.overridden { border-color: var(--focus); box-shadow: inset 3px 0 0 var(--focus); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 7px 13px; border-radius: 7px; cursor: pointer; }
+.btn:hover { border-color: var(--focus); }
+.btn.link { border: 0; background: none; padding: 2px 4px; color: var(--focus); text-decoration: underline; font-size: 13px; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 14px; }
+.chip[aria-pressed="true"] { background: var(--head); color: var(--head-fg); border-color: var(--head); }
+.chip .ct { font-family: var(--font-data); font-size: 12px; opacity: .8; margin-left: 4px; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; }
+.kpi b { font-family: var(--font-data); font-weight: 500; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.kpi span { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.kpi em { font-style: normal; font-size: 13px; color: var(--muted); }
+.note { padding: 10px 12px; border-radius: 8px; background: var(--sage); font-size: 14px; }
+.note.warn { background: var(--warn-bg); color: var(--warn); font-weight: 700; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--sage); color: var(--fg); white-space: nowrap; vertical-align: 1px; }
+.badge.pick { background: var(--pick); border: 1px solid var(--pick-line); }
+.badge.va { background: var(--pick); }
+.badge.warn { background: var(--warn-bg); color: var(--warn); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th { background: var(--head); color: var(--head-fg); text-align: left; font-weight: 700; font-size: 12px; letter-spacing: .03em; padding: 8px 10px; vertical-align: bottom; }
+td { padding: 8px 10px; border-top: 1px solid var(--line); vertical-align: middle; }
+th.n, td.n { text-align: right; white-space: nowrap; }
+tr.group td { background: var(--sage); font-weight: 700; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+tr.total td { font-weight: 700; background: var(--sage); }
+tr.picked td { background: var(--pick); }
+tr.clickable { cursor: pointer; }
+tr.clickable:hover td { background: var(--sage); }
+tr.picked.clickable:hover td { background: var(--pick); }
+.name { font-weight: 700; }
+.sub-line { display: block; font-size: 12px; color: var(--muted); font-weight: 400; }
+.opts td:first-child, .opts th:first-child { position: sticky; left: 0; z-index: 1; }
+.opts td:first-child { background: var(--surface); }
+.opts tr.picked td:first-child { background: var(--pick); }
+
+@media (max-width: 720px) {
+  table.stack thead { display: none; }
+  table.stack, table.stack tbody { display: block; }
+  table.stack tr { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding: 12px 14px; border-top: 1px solid var(--line); }
+  table.stack tr:first-child { border-top: 0; }
+  table.stack td { border: 0; padding: 0; display: grid; gap: 2px; align-content: start; text-align: left; white-space: normal; }
+  table.stack td[data-label]::before { content: attr(data-label); font-family: var(--font-body); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  table.stack td.wide { grid-column: 1 / -1; }
+  table.stack td:empty { display: none; }
+  table.stack tr.group { display: block; padding: 8px 14px; background: var(--sage); }
+  table.stack tr.group td { background: none; }
+  table.stack tr.total td { background: none; }
+  table.stack tr.total { background: var(--sage); }
+  table.stack .in.sm { max-width: none; }
+}
+
+.stores { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.store { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.store.done { border-color: var(--pick-line); }
+.store header { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.store .meta { font-size: 13px; color: var(--muted); display: grid; gap: 2px; }
+.store .ask { font-size: 14px; }
+.store .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.phone { font-family: var(--font-data); user-select: all; }
+ol.steps, ul.tips { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; max-width: 75ch; }
+.script { font-style: italic; border-left: 3px solid var(--pick-line); padding-left: 12px; }
+.combo { display: grid; gap: 8px; }
+.combo .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 520px) { .combo .row2, .store .row2 { grid-template-columns: 1fr; } }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 9px 16px; border-radius: 8px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 20; }
+.toast.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="top gutter">
+  <div class="inner">
+    <h1>Soil Cook</h1>
+    <div class="sub"><span>Organic soil batch planner · prices checked Oct 23–24, 2026</span><span class="status" id="status">Loading your saved numbers…</span></div>
+  </div>
+</div>
+<nav class="tabs gutter" aria-label="Sections">
+  <div class="inner tabrow" id="tabs">
+    <a href="#plan">Plan &amp; shop</a>
+    <a href="#mix">Mix</a>
+    <a href="#prices">Prices</a>
+    <a href="#premix">Premix cost</a>
+    <a href="#stores">Local stores</a>
+    <a href="#guide">Guide</a>
+  </div>
+</nav>
+<main class="gutter"><div class="inner" id="app"></div></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const D = {"items": [{"id": "biochar", "cat": "Base", "name": "Biochar", "short": "Biochar", "product": "Wakefield Biochar with CarbonBoost, 1 cu ft", "size": 1, "unit": "cu ft", "vol": 1, "price": 35.19, "seller": "Home Depot", "note": "Or make your own for free. Charge it before use.", "old": 90, "link": "https://homedepot.com/p/WAKEFIELD-Biochar-with-CarbonBoost-Soil-Amendment-1-cu-ft-Bag-4213/335271401", "pickup": false}, {"id": "clay-pebbles", "cat": "Base", "name": "Clay pebbles", "short": "Clay pebbles", "product": "Plant!t expanded clay pellets, 40 L", "size": 1.41, "unit": "cu ft", "vol": 1.41, "price": 33.06, "seller": "HTG Supply (online, sale)", "note": "Hydroton Giant 50 L: $53.13 (extra-large pebbles, less ideal for soil).", "old": 36, "link": "https://www.htgsupply.com/product-category/garden-soil-grow-mediums/expanded-clay-pellets-grow-rocks/hydroton-clay-pellets/", "pickup": false}, {"id": "coco-coir-block", "cat": "Base", "name": "Coco coir block", "short": "Coco coir block", "product": "Kaya Coir 5 kg (11 lb) compressed block", "size": 11.02, "unit": "lb", "vol": 2.14, "price": 11.95, "seller": "HTG Supply (online)", "note": "Expands to ~16 gal (2.14 cu ft). Custom Hydro FibreDust 5 kg: $11.14 (backordered).", "old": null, "link": "https://www.htgsupply.com/products/kaya-coir-coco-blocks-5-kilograms/", "pickup": false}, {"id": "compost-bagged", "cat": "Base", "name": "Compost (bagged)", "short": "Compost (bagged)", "product": "Greensmix lawn & garden compost, 40 lb", "size": 1.5, "unit": "cu ft", "vol": 1.5, "price": 4.49, "seller": "Hemlock Hardware (sold out there)", "note": "Leafgro also comes in 1.5 cu ft bags (Home Depot; price varies by store).", "old": 5.3, "link": "https://hemlockhardware.com/products/701594-greensmix-15-cu-ft-40-lb-lawn-garden-compost", "pickup": false}, {"id": "compost-bulk", "cat": "Base", "name": "Compost (bulk)", "short": "Compost (bulk, 1 yard = 27 cu ft)", "product": "Pax Recycle organic leaf compost, 1 cubic yard", "size": 27, "unit": "cu ft", "vol": 27, "price": 59.99, "seller": "Patuxent Nursery (Bowie, MD)", "note": "1 cubic yard ≈ 1,100 lb. Cheapest per cu ft; needs a truck or delivery.", "old": null, "link": "https://patuxentnursery.com/?p=20407", "pickup": false}, {"id": "lava-rock", "cat": "Base", "name": "Lava rock", "short": "Lava rock (small)", "product": "BuildASoil small black lava rock (3/8 in. minus)", "size": 10, "unit": "lb", "vol": 0.2, "price": 27, "seller": "BuildASoil (online)", "note": "ESTIMATE: 10 lb ≈ 0.2 cu ft — measure it. Pricey shipped; ask local landscape yards for bulk 'lava fines'.", "old": null, "link": "https://buildasoil.com/products/small-black-lava-rock", "pickup": false}, {"id": "peat-moss", "cat": "Base (alternative)", "name": "Peat moss", "short": "Peat moss (alternative)", "product": "Premier sphagnum peat moss, 3.8 cu ft compressed bale", "size": 3.8, "unit": "cu ft (compressed)", "vol": 6, "price": 36.99, "seller": "Hemlock Hardware (ships)", "note": "Fluffs to ~6 cu ft. Not in the recipe — coco replaces it (peat bogs store carbon and take centuries to regrow). Needs dolomite lime.", "old": 12, "link": "https://hemlockhardware.com/products/735051-premier-62-lb-38-cu-ft-compressed-bale-sphagnum-peat-moss", "pickup": false}, {"id": "pine-bark-fines", "cat": "Base", "name": "Pine bark fines", "short": "Pine bark fines", "product": "Frey Soil Conditioner — organic pine fines, 2 cu ft", "size": 2, "unit": "cu ft", "vol": 2, "price": 9.95, "seller": "The Mill (MD/PA stores; also ships)", "note": "Fine, aged bark — not nuggets. Lowe's and Home Depot sell 'soil conditioner' pine fines too.", "old": 3.5, "link": "https://www.themillstores.com/products/frey-soil-conditioner", "pickup": false}, {"id": "pumice", "cat": "Base (alternative)", "name": "Pumice", "short": "Pumice (alternative)", "product": "BuildASoil pumice, 1 cu ft (3/8 x 1/4 in.)", "size": 1, "unit": "cu ft", "vol": 1, "price": 34.99, "seller": "Blue Ridge Hydroponics — Salem / Christiansburg, VA (sold out)", "note": "Replaced by clay pebbles or lava rock. Lighter than lava, holds a little water.", "old": 17, "link": "https://blueridgehydroponics.com/products/pumice-1-cubic-ft-bag", "pickup": true}, {"id": "rice-hulls", "cat": "Base", "name": "Rice hulls", "short": "Rice hulls", "product": "ARBICO Organics rice hull amendment", "size": 1, "unit": "cu ft", "vol": 1, "price": 26.86, "seller": "Hydrobuilder (online)", "note": "BuildASoil 50 lb (~7 cu ft): $77.52 — best value, but out of stock.", "old": 24, "link": "https://hydrobuilder.com/products/arbico-organics-rice-hull-media-amendment-1-cubic-foot", "pickup": false}, {"id": "worm-castings", "cat": "Base", "name": "Worm castings", "short": "Worm castings", "product": "Roots Organics Big Worm, 1 cu ft", "size": 1, "unit": "cu ft", "vol": 1, "price": 49.95, "seller": "Happy Hydro (sold out)", "note": "About 35 lb per bag. Or make your own with a worm bin.", "old": 50, "link": "https://happyhydro.com/products/roots-organics-big-worm-earthworm-castings-1-cu-ft", "pickup": false}, {"id": "azomite", "cat": "Core premix", "name": "Azomite", "short": "Azomite", "product": "Azomite Micronized", "size": 44, "unit": "lb", "vol": null, "price": 28.95, "seller": "New Country Organics — Waynesboro, VA pickup", "note": "Grower's Solution 44 lb: $48.95", "old": 9, "link": "https://www.newcountryorganics.com/azomite-micronized-44-lb-bag.html", "pickup": true}, {"id": "crab-meal", "cat": "Core premix", "name": "Crab meal", "short": "Crab meal", "product": "Crab shell meal (3-4-0)", "size": 40, "unit": "lb", "vol": null, "price": 57.99, "seller": "Grow Organic (online)", "note": "Down To Earth 40 lb @ Hydrobuilder: $69.45 (out of stock)", "old": 11, "link": "https://www.groworganic.com/products/crab-shell-meal-3-4-0-40-lb", "pickup": false}, {"id": "fishbone-meal", "cat": "Core premix", "name": "Fishbone meal", "short": "Fishbone meal", "product": "Fish bone meal (4-14-0)", "size": 50, "unit": "lb", "vol": null, "price": 67.9, "seller": "Seven Springs Farm Supply — Check, VA", "note": "Grow Organic 40 lb (3-16-0): $85.99", "old": 10, "link": "https://www.7springsfarm.com/products/fish-bone-meal-40-protein-5-16-0-50-lb-bag/", "pickup": true}, {"id": "gypsum", "cat": "Core premix", "name": "Gypsum", "short": "Gypsum", "product": "Austinville Soft Cal pelletized gypsum", "size": 40, "unit": "lb", "vol": null, "price": 16.99, "seller": "Tractor Supply (local store)", "note": "Soil Doctor 40 lb @ Lowe's (price not listed online)", "old": null, "link": "https://www.tractorsupply.com/tsc/product/austinville-limestone-soft-cal-gypsum-soil-conditioner-40-lb-3140", "pickup": true}, {"id": "kelp-meal", "cat": "Core premix", "name": "Kelp meal", "short": "Kelp meal", "product": "Kelp meal (1-0-2)", "size": 50, "unit": "lb", "vol": null, "price": 87.99, "seller": "Al's Seed (online)", "note": "Custom Hydro 50 lb: $91.13 (sale)", "old": 20, "link": "https://alseed.com/product/kelp-meal/", "pickup": false}, {"id": "neem-seed-meal", "cat": "Core premix", "name": "Neem seed meal", "short": "Neem seed meal", "product": "EcoMax neem seed meal (6-1-2)", "size": 50, "unit": "lb", "vol": null, "price": 79.99, "seller": "Grow Organic (online)", "note": "Grow Organic: $71.99 each for 3+ bags", "old": 16, "link": "https://www.groworganic.com/products/ecomax-neem-sd-meal-612-pwdr-50-lb", "pickup": false}, {"id": "oyster-shell", "cat": "Core premix", "name": "Oyster shell", "short": "Oyster shell", "product": "Oyster shell flour", "size": 50, "unit": "lb", "vol": null, "price": 25.99, "seller": "Grow Organic (online)", "note": "Grow Organic: $23.39 each for 3+ bags", "old": 27, "link": "https://www.groworganic.com/products/oyster-shell-flour-50-lb", "pickup": false}, {"id": "alfalfa-meal", "cat": "Top dress & fix-it", "name": "Alfalfa meal", "short": "Alfalfa meal", "product": "Alfalfa meal (2-0-1)", "size": 50, "unit": "lb", "vol": null, "price": 35.95, "seller": "New Country Organics — Waynesboro, VA pickup", "note": "Seven Springs Farm Supply (Check, VA): $36.70", "old": 9, "link": "https://www.newcountryorganics.com/alfalfa-meal-organic-50-lb-bag.html", "pickup": true}, {"id": "bio-fish", "cat": "Top dress & fix-it", "name": "Bio Fish", "short": "Bio Fish", "product": "Bio Fish (7-7-2)", "size": 50, "unit": "lb", "vol": null, "price": 107.99, "seller": "Grow Organic (online)", "note": "$97.19 each for 3+ bags", "old": 11, "link": "https://www.groworganic.com/products/bio-fish-all-purpose-772-50-lb", "pickup": false}, {"id": "bio-live", "cat": "Top dress & fix-it", "name": "Bio Live", "short": "Bio Live", "product": "Bio Live (5-4-2)", "size": 50, "unit": "lb", "vol": null, "price": 104.99, "seller": "Grow Organic (online)", "note": "Hydrobuilder 50 lb: $116.98 (out of stock)", "old": 17, "link": "https://www.groworganic.com/collections/down-to-earth", "pickup": false}, {"id": "blood-meal", "cat": "Top dress & fix-it", "name": "Blood meal", "short": "Blood meal", "product": "Blood meal (12-0-0)", "size": 50, "unit": "lb", "vol": null, "price": 94.21, "seller": "Compostwerks (Mt. Kisco, NY — pickup by appt.)", "note": "Fertrell 50 lb: $173.50 with shipping included", "old": 21, "link": "https://compostwerks.com/organics/natural-fertilizers/product/47-blood-meal-12-0-0-50-pound-bag", "pickup": false}, {"id": "bone-meal", "cat": "Top dress & fix-it", "name": "Bone meal", "short": "Bone meal", "product": "Steamed bone meal, granulated (2-14-0)", "size": 50, "unit": "lb", "vol": null, "price": 42.9, "seller": "Seven Springs Farm Supply — Check, VA", "note": "Swap for fishbone meal at the same rate. Grow Organic 3-15-0, 50 lb: $57.99", "old": 15, "link": "https://www.7springsfarm.com/products/bone-meal-steamed-granular-2-14-0-50-lb-bag", "pickup": true}, {"id": "dolomite-lime", "cat": "Top dress & fix-it", "name": "Dolomite lime", "short": "Dolomite lime", "product": "Dolomite lime (—)", "size": 40, "unit": "lb", "vol": null, "price": 12.99, "seller": "Ace Hardware (Greenacres, local store)", "note": "Grow Organic 50 lb: $26.99", "old": 9, "link": "https://www.acehardware.com/p/7421597", "pickup": false}, {"id": "epsom-salt", "cat": "Top dress & fix-it", "name": "Epsom salt", "short": "Epsom salt", "product": "Epsom salt (—)", "size": 50, "unit": "lb", "vol": null, "price": 20, "seller": "Irrigation-Mart (online)", "note": "Cheaper per bag at 4+ bags", "old": 5, "link": "https://irrigation-mart.com/items/FERT-EPSOMSALT", "pickup": false}, {"id": "feather-meal", "cat": "Top dress & fix-it", "name": "Feather meal", "short": "Feather meal", "product": "Feather meal (12-0-0)", "size": 50, "unit": "lb", "vol": null, "price": 49.99, "seller": "Grow Organic (online)", "note": "$46.99 each for 10+ bags", "old": 15, "link": "https://www.groworganic.com/products/feather-meal-50-lb", "pickup": false}, {"id": "ferrous-sulfate", "cat": "Top dress & fix-it", "name": "Ferrous sulfate", "short": "Ferrous sulfate", "product": "Ferrous sulfate (—)", "size": 50, "unit": "lb", "vol": null, "price": 43.99, "seller": "Grow Organic (iron sulfate 20%)", "note": "$39.59 each for 3+ bags; low inventory", "old": 22, "link": "https://www.groworganic.com/products/iron-sulfate-20-50-lb", "pickup": false}, {"id": "greensand", "cat": "Top dress & fix-it", "name": "Greensand", "short": "Greensand", "product": "Greensand (glauconite)", "size": 44, "unit": "lb", "vol": null, "price": 46.99, "seller": "Grow Organic (online, out of stock)", "note": "Lyngso Garden 50 lb: $73.50. Seven Springs (Check, VA) stocks Agrolift greensand 50 lb — call 540-651-3228 for price", "old": 16, "link": "https://www.groworganic.com/products/greensand-50-lb", "pickup": false}, {"id": "high-n-bat-guano", "cat": "Top dress & fix-it", "name": "High-N bat guano", "short": "High-N bat guano", "product": "High 'N' bat guano (9-3-1), 44 lb", "size": 44, "unit": "lb", "vol": null, "price": 144.99, "seller": "Biologic Crop Solutions (online)", "note": "Not in the recipe — neem and crab cover nitrogen. Roots Organics 9-3-1, 9 lb: $33.69 (Hydrobuilder).", "old": 12, "link": "https://www.livebiologic.com/high-n-bat-guano-44-lb-50-plt.html", "pickup": false}, {"id": "high-p-bat-guano", "cat": "Top dress & fix-it", "name": "High-P bat guano", "short": "High-P bat guano", "product": "High-P bat guano (0-7-0)", "size": 55, "unit": "lb", "vol": null, "price": 51, "seller": "Le Ballister's (Santa Rosa, CA)", "note": "Grow Organic Archipelago 55 lb: $79.99 (out of stock)", "old": 10, "link": "https://leballisters.com/product/bat-guano-55-bag-0-7-0/", "pickup": false}, {"id": "humic-acid", "cat": "Top dress & fix-it", "name": "Humic acid", "short": "Humic acid", "product": "Humic acid (—)", "size": 50, "unit": "lb", "vol": null, "price": 82.5, "seller": "Grow Green MI (DTE granular, sale)", "note": null, "old": 19, "link": "https://growgreenmi.com/down-to-earth-granular-humic-acid-50-lb", "pickup": false}, {"id": "insect-frass", "cat": "Top dress & fix-it", "name": "Insect frass", "short": "Insect frass", "product": "Insect frass (3-1-1)", "size": 25, "unit": "lb", "vol": null, "price": 73.95, "seller": "Buckeye Organics (online)", "note": "25 lb is the largest size most sellers offer; 50 lb bags are rare Your original pick, Beetle Juice, is a brand of insect frass ($25 on your old sheet).", "old": 19, "link": "https://www.buckeyeorganics.net/products/insect-frass", "pickup": false}, {"id": "langbeinite", "cat": "Top dress & fix-it", "name": "Langbeinite", "short": "Langbeinite", "product": "Langbeinite (0-0-22)", "size": 50, "unit": "lb", "vol": null, "price": 82, "seller": "Hydrobuilder (online)", "note": "Down To Earth brand", "old": 11, "link": "https://hydrobuilder.com/products/down-to-earth-langbeinite-sul-po-mag-50-lb", "pickup": false}, {"id": "malted-barley", "cat": "Top dress & fix-it", "name": "Malted barley", "short": "Malted barley", "product": "Malted barley (—)", "size": 50, "unit": "lb", "vol": null, "price": 79.99, "seller": "Homebrewing.org (2-row, whole grain)", "note": "You only need a little. Buy 5–10 lb locally and grind it", "old": 14, "link": "https://homebrewing.org/products/2-row-50-lb-bag", "pickup": false}, {"id": "mycorrhizae-mykos", "cat": "Optional", "name": "Mycorrhizae (Mykos)", "short": "Mykos (mycorrhizae)", "product": "Xtreme Gardening Mykos granular, 2.2 lb", "size": 2.2, "unit": "lb", "vol": null, "price": 32.25, "seller": "Happy Hydro (online)", "note": "1 lb: $20.85. Larger sizes by quote.", "old": 35, "link": "https://www.happyhydro.com/products/xtreme-mykos-pure-mycorrhizal-inoculum-granular-1-lb", "pickup": false}, {"id": "red-wigglers-worms", "cat": "Optional", "name": "Red wigglers (worms)", "short": "Red wigglers (worms)", "product": "Pure red wiggler composting worms, 1 lb (~800–1,200 worms)", "size": 1, "unit": "lb", "vol": null, "price": 64.99, "seller": "Meme's Worms (online, free shipping; sold out)", "note": "Start a worm bin for free castings. One-time purchase — they multiply.", "old": 40, "link": "https://memesworms.com/products/pure-eisenia-fetida-aka-red-wigglers", "pickup": false}, {"id": "rock-phosphate", "cat": "Top dress & fix-it", "name": "Rock phosphate", "short": "Rock phosphate", "product": "Rock phosphate (0-3-0)", "size": 50, "unit": "lb", "vol": null, "price": 18.94, "seller": "Custom Hydro (CalPhos soft rock, granular)", "note": null, "old": 9.2, "link": "https://customhydronutrients.com/CalPhos-soft-rock-phosphate-GRANULAR-50-lb_p_23110.html", "pickup": false}, {"id": "seabird-guano", "cat": "Top dress & fix-it", "name": "Seabird guano", "short": "Seabird guano", "product": "Seabird guano (0-11-0)", "size": 40, "unit": "lb", "vol": null, "price": 144.07, "seller": "Grow Green MI (online, sale)", "note": "Hefty Harvest 40 lb: $125 (sold out)", "old": 10, "link": "https://growgreenmi.com/down-to-earth-seabird-guano-0-11-0-40-lb", "pickup": false}], "stores": [{"n": 1, "name": "Tractor Supply Co.", "type": "Farm store", "addr": "4179 Plank Rd, Fredericksburg 22407", "phone": "540-785-5775", "web": "https://www.tractorsupply.com/tsc/store_Fredericksburg-VA-22407_695", "hours": "Mon–Sat 8–9; Sun 9–7", "miles": 4.1, "ask": "Gypsum (Soft Cal 40 lb), dolomite lime, Epsom salt, oyster shell, alfalfa pellets (no additives), blood/bone meal"}, {"n": 2, "name": "Agri-Service, LLC", "type": "Feed store", "addr": "91 Chriswood Ln, Stafford 22556", "phone": "540-752-2667", "web": null, "hours": "Wed–Fri 9–4; Sat 9–12; Sun–Tue closed", "miles": 10.8, "ask": "Alfalfa meal/pellets, oyster shell, feed-grade kelp, 50 lb bags. Will they special-order meals or Azomite?"}, {"n": 3, "name": "Lowe's — Carl D Silver Pkwy", "type": "Home improvement", "addr": "1361 Carl D Silver Pkwy, Fredericksburg 22401", "phone": "540-786-9050", "web": "https://www.lowes.com", "hours": "Mon–Sat 6am–10pm; Sun 7–8", "miles": 2.5, "ask": "Leafgro compost, pine bark fines ('soil conditioner'), peat, perlite, Epsom salt, gypsum, small bags of meals. Check stock on Lowes.com."}, {"n": 4, "name": "Lowe's — Southpoint", "type": "Home improvement", "addr": "10101 Southpoint Pkwy, Fredericksburg 22407", "phone": "540-369-9000", "web": "https://www.lowes.com", "hours": "Mon–Sat 6am–10pm; Sun 8–8", "miles": 5.1, "ask": "Same as above"}, {"n": 5, "name": "Lowe's — Banks Ford", "type": "Home improvement", "addr": "299 Banks Ford Pkwy, Fredericksburg 22406", "phone": "540-371-2686", "web": "https://www.lowes.com", "hours": "Mon–Sat 6am–10pm; Sun 8–8", "miles": 4.9, "ask": "Same as above"}, {"n": 6, "name": "Home Depot — Gateway Blvd", "type": "Home improvement", "addr": "1201 Gateway Blvd, Fredericksburg 22401", "phone": "540-368-0515", "web": "https://www.homedepot.com", "hours": "Mon–Sat 6am–10pm; Sun 8–8", "miles": 2.4, "ask": "Leafgro compost, pine bark soil conditioner, biochar (Wakefield), peat, Epsom salt, small bags of meals. Check stock on HomeDepot.com."}, {"n": 7, "name": "Home Depot — Plank Rd", "type": "Home improvement", "addr": "5771 Plank Rd, Fredericksburg 22407", "phone": "540-785-8871", "web": "https://www.homedepot.com", "hours": "Mon–Sat 6am–10pm; Sun 8–8", "miles": 6, "ask": "Same as above"}, {"n": 8, "name": "Meadows Farms — Plank Rd", "type": "Garden center", "addr": "5043 Plank Rd, Fredericksburg 22407", "phone": "540-786-8171", "web": null, "hours": "Mon–Fri 8–7; Sat 9–7; Sun 9–6", "miles": 4.9, "ask": "Bagged compost, pine bark soil conditioner, organic fertilizers (ask about Espoma or similar)"}, {"n": 9, "name": "Meadows Farms — Patriot Hwy", "type": "Garden center", "addr": "8424 Patriot Hwy, Fredericksburg 22407", "phone": "540-710-8999", "web": null, "hours": "Mon–Fri 8–6; Sat–Sun 9–6", "miles": 8.3, "ask": "Same as above"}, {"n": 10, "name": "Remington Mulch & Firewood", "type": "Bulk soil & compost yard", "addr": "4821 Massaponax Church Rd, Fredericksburg 22407", "phone": "703-560-2275", "web": "http://www.remingtonmulch.com/", "hours": "Mon–Fri 7–5; Sat 7–2", "miles": 7.8, "ask": "Bulk leaf compost / mushroom compost per yard, pine fines, delivery fee. Ask for FINISHED, cured compost."}, {"n": 11, "name": "Acors Topsoil and Mulch", "type": "Bulk soil & compost yard", "addr": "6601 Macklin Dr, Spotsylvania 22553", "phone": "540-891-2431", "web": "http://www.acorstopsoilandmulch.com/", "hours": "Mon–Fri 7:30–5; Sat 8–2", "miles": 7.1, "ask": "Bulk compost per yard, pine fines, delivery fee"}, {"n": 12, "name": "Tumbleweed Gardens", "type": "Bulk soil, compost & stone", "addr": "637 Kings Hwy, Fredericksburg 22405", "phone": "540-899-9004", "web": "https://tumbleweedgardenssheds.com/", "hours": "Mon–Fri 8–5; Sat 8–3; Sun 10–3", "miles": 2.7, "ask": "Bulk compost per yard; you can see the piles before buying"}, {"n": 13, "name": "Stone & Mulch Center", "type": "Landscape stone & mulch", "addr": "78 Shelton Shop Rd, Stafford 22554", "phone": "540-657-5454", "web": null, "hours": "Mon–Fri 7–6; Sat 8–5; Sun 9–3", "miles": 11.2, "ask": "Small screened lava rock / lava fines, pine fines; will they order it?"}, {"n": 14, "name": "Jay's Brewing (homebrew shop)", "type": "Homebrew supply", "addr": "9790 Center St, Manassas, VA 20110", "phone": "703-361-2908", "web": null, "hours": "Tue–Fri 11–4; Sat 10–5; Sun–Mon closed", "miles": 31.2, "ask": "Malted barley (2-row) — ask them to mill/grind it. Buy 5–10 lb."}, {"n": 15, "name": "Hydrokulture (compare only)", "type": "Grow store", "addr": "328 Emancipation Hwy, Fredericksburg 22401", "phone": "540-940-6962", "web": "https://thehydrokulture.com/", "hours": "Mon–Sat 11–7; Sun closed", "miles": 1.1, "ask": "Only to compare prices on coco blocks, clay pebbles, castings, Mykos"}, {"n": 16, "name": "New Country Organics (day trip)", "type": "Organic fertilizer mill", "addr": "801 2nd St, Waynesboro, VA", "phone": "888-699-7088", "web": "https://www.newcountryorganics.com/find-us", "hours": "Order ahead; pickup next business day", "miles": 79.3, "ask": "Azomite $28.95/44 lb, alfalfa meal $35.95/50 lb — ask what else they stock"}, {"n": 17, "name": "Seven Springs Farm Supply (day trip)", "type": "Organic farm supply", "addr": "426 Jerry Lane NE, Check, VA", "phone": "540-651-3228", "web": "https://www.7springsfarm.com/", "hours": "Call ahead", "miles": 169.7, "ask": "Rice hulls $32.50/50 lb, bone meal $42.90, fishbone $67.90, feather $38.20, blood $66, greensand — quote for a group order"}], "other": [{"name": "Alfalfa meal", "npk": "2-0-1", "good": "Cheap nitrogen + triacontanol (natural growth stimulant)", "use": "Veg top dress", "notes": "Can stand in for neem to save money"}, {"name": "Bio Fish", "npk": "7-7-2", "good": "All-in-one blend", "use": "Simplest option for beginners", "notes": "All-in-one blend; duplicates single ingredients"}, {"name": "Bio Live", "npk": "5-4-2", "good": "All-in-one blends", "use": "Simplest option for beginners", "notes": "All-in-one blend; duplicates single ingredients"}, {"name": "Blood meal", "npk": "12-0-0", "good": "Fastest organic nitrogen", "use": "Rescue for yellowing leaves", "notes": "Never in the base mix — burn risk"}, {"name": "Bone meal", "npk": "2-14-0", "good": "Slow phosphorus + calcium", "use": "Swap for fishbone meal", "notes": "Same job as fishbone meal; use one or the other"}, {"name": "Dolomite lime", "npk": "—", "good": "Raises pH, adds calcium + magnesium", "use": "When using peat", "notes": "Add if pH tests below ~6.2"}, {"name": "Epsom salt", "npk": "—", "good": "Quick magnesium", "use": "Deficiency fix only", "notes": null}, {"name": "Feather meal", "npk": "12-0-0", "good": "Very slow-release nitrogen", "use": "Long outdoor seasons", "notes": null}, {"name": "Ferrous sulfate", "npk": "—", "good": "Quick iron", "use": "Deficiency fix only", "notes": null}, {"name": "Greensand", "npk": "0-0-1.4", "good": "Very slow potassium, iron and trace minerals; helps sandy soil hold water", "use": "Long-haul no-till beds", "notes": "Too slow for a single grow; shines in soil reused for years"}, {"name": "High-P bat guano", "npk": "0-7-0", "good": "Fast phosphorus for flowering", "use": "Flowering", "notes": "Higher cost; habitat concerns"}, {"name": "Humic acid", "npk": "—", "good": "Helps roots grab nutrients (chelation)", "use": "Optional", "notes": "Mostly redundant with good compost"}, {"name": "Insect frass", "npk": "3-1-1", "good": "Chitin + quick-acting nitrogen", "use": "Top dress / tea", "notes": "Gentler alternative to crab meal"}, {"name": "Langbeinite", "npk": "0-0-22", "good": "Potassium, magnesium and sulfur during flowering", "use": "Flowering top dress", "notes": "Strongest candidate to add back"}, {"name": "Malted barley", "npk": "—", "good": "Enzymes break down old roots; feeds microbes", "use": "Top dress / reused soil", "notes": "Grind at home"}, {"name": "Rock phosphate", "npk": "0-3-0", "good": "Slow phosphorus + calcium", "use": "Reused no-till soil", "notes": "Lasts years"}, {"name": "Seabird guano", "npk": "0-11-0", "good": "Fast phosphorus + calcium for flowering", "use": "Flowering", "notes": "Higher cost; habitat concerns"}], "core": [{"name": "Azomite", "parts": 2, "npk": "0-0-0.2", "does": "Trace minerals", "why": "Covers greensand, humic acid and rock phosphate's minor roles", "cupsPerLb": 1.9}, {"name": "Crab meal", "parts": 2, "npk": "4-3-0", "does": "Nitrogen, calcium, chitin (feeds beneficial microbes)", "why": "Three jobs in one bag; seafood byproduct", "cupsPerLb": 4}, {"name": "Fishbone meal", "parts": 1, "npk": "4-12-0", "does": "Phosphorus + calcium", "why": "Added to fix the premix's low phosphorus", "cupsPerLb": 2.5}, {"name": "Gypsum", "parts": 1, "npk": "—", "does": "Calcium + sulfur without changing pH", "why": "Cheap; sulfur supports aroma", "cupsPerLb": 1.9}, {"name": "Kelp meal", "parts": 2, "npk": "1-0.1-2", "does": "Potassium, trace minerals, natural growth hormones", "why": "Feeds the plant and the microbes; low burn risk", "cupsPerLb": 3.2}, {"name": "Neem seed meal", "parts": 2, "npk": "6-1-2", "does": "Nitrogen + pest deterrent", "why": "Two jobs in one bag", "cupsPerLb": 3.5}, {"name": "Oyster shell", "parts": 2, "npk": "—", "does": "Calcium + pH buffer", "why": "Balances acidic peat; slow and safe", "cupsPerLb": 1.8}], "combos": [{"name": "Chitin stack", "ing": "Crab meal + insect frass + malted barley", "idea": "Chitin triggers plant defense responses; growers claim more resin", "ev": "Defense effect is real; cannabinoid boost mostly anecdotal"}, {"name": "Flower boost", "ing": "Langbeinite + gypsum + fishbone meal (top dress, early flower)", "idea": "Covers potassium, phosphorus, magnesium and sulfur demand as flowers form", "ev": "Sulfur is linked to cannabis 'skunky' aroma compounds"}, {"name": "Long-haul no-till", "ing": "Rock phosphate + feather meal + rock dust (Azomite) + greensand", "idea": "Slow nutrients for soil reused for years. Greensand adds slow potassium and iron and helps hold water", "ev": "Best for permanent beds. Add once a year; these release over seasons, not weeks"}, {"name": "Natural hormones", "ing": "Kelp + alfalfa + malted barley", "idea": "Kelp growth hormones + triacontanol + microbe food", "ev": "General vigor"}]}
+;
+const GPC = 7.48;
+const GROUPS = [
+  { k: "tsc", name: "Tractor Supply", stores: [1] },
+  { k: "agri", name: "Agri-Service", stores: [2] },
+  { k: "lowes", name: "Lowe's", stores: [3, 4, 5] },
+  { k: "hd", name: "Home Depot", stores: [6, 7] },
+  { k: "meadows", name: "Meadows Farms", stores: [8, 9] },
+  { k: "bulk", name: "Bulk yards", stores: [10, 11, 12] },
+  { k: "stone", name: "Stone & Mulch", stores: [13] },
+  { k: "day", name: "Day-trip / homebrew", stores: [14, 16, 17] },
+  { k: "hydro", name: "Hydrokulture", stores: [15] },
+];
+const DEF = {
+  plan: { potSize: "10", pots: "20", rock: "Clay pebbles", rockPct: "34", barkPct: "33", biochar: "5", blocks: "", batchGal: "", cupsPerCuft: "3" },
+  prices: {}, premix: { parts: {}, cups: {} }, calls: {}, quotes: {}, tests: {},
+};
+const KEYS = Object.keys(DEF);
+let S = JSON.parse(JSON.stringify(DEF));
+let db = null, downloads = null, mode = "loading";
+let tab = "plan", quoteGroup = "tsc", storeFilter = "all";
+
+/* ---------- helpers ---------- */
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = (v, f = 0) => { const n = parseFloat(String(v ?? "").replace(/[$,%\s]/g, "")); return isFinite(n) ? n : f; };
+const has = (v) => v !== undefined && v !== null && String(v).trim() !== "";
+const f = (n, d = 2) => isFinite(n) ? n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d }) : "—";
+const usd = (n, d = 2) => isFinite(n) ? "$" + f(n, d) : "—";
+const pct = (n, d = 0) => isFinite(n) ? f(n * 100, d) + "%" : "—";
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 1800); }
+function inp(bind, value, o = {}) {
+  const id = "f-" + bind.replace(/[^a-zA-Z0-9]+/g, "-");
+  const cls = ["in", o.num !== false ? "num" : "", o.sm ? "sm" : "", o.over ? "overridden" : ""].join(" ");
+  return `<input id="${id}" class="${cls}" data-bind="${esc(bind)}" value="${esc(value)}" ${o.num !== false ? 'inputmode="decimal"' : ""} ${o.ph ? `placeholder="${esc(o.ph)}"` : ""} aria-label="${esc(o.label || bind)}" autocomplete="off">`;
+}
+function getPath(obj, path) { return path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj); }
+function setPath(obj, path, v) { const ks = path.split("."); let o = obj; ks.slice(0, -1).forEach((k) => { if (typeof o[k] !== "object" || o[k] === null) o[k] = {}; o = o[k]; }); o[ks.at(-1)] = v; }
+
+/* ---------- model ---------- */
+function item(id) {
+  const b = D.items.find((x) => x.id === id), o = S.prices[id] || {};
+  return { ...b,
+    size: has(o.size) ? num(o.size) : b.size,
+    vol: has(o.vol) ? num(o.vol) : b.vol,
+    price: has(o.price) ? num(o.price) : (o.price === "" ? NaN : b.price),
+    seller: has(o.seller) ? o.seller : b.seller };
+}
+const core = () => D.core.map((c) => {
+  const it = item(slug(c.name));
+  const parts = has(S.premix.parts[c.name]) ? num(S.premix.parts[c.name]) : c.parts;
+  const cpl = has(S.premix.cups[c.name]) ? num(S.premix.cups[c.name]) : c.cupsPerLb;
+  return { ...c, it, parts, cpl };
+});
+
+function compute() {
+  const p = S.plan;
+  const pot = num(p.potSize), pots = num(p.pots), r = num(p.rockPct) / 100, b = num(p.barkPct) / 100;
+  const bc = Math.min(Math.max(num(p.biochar) / 100, 0), 0.95), cpc = num(p.cupsPerCuft, 3);
+  const coco = item("coco-coir-block"), rock = item(p.rock === "Lava rock" ? "lava-rock" : "clay-pebbles");
+  const hull = item("rice-hulls"), comp = item("compost-bagged"), cast = item("worm-castings"), bark = item("pine-bark-fines");
+  const hs = Math.max(0, 1 - r - b);
+  const bags = (need, vol) => (need > 0 && vol > 0 ? Math.ceil(need / vol - 0.0001) : 0);
+  const pr = (x) => (isFinite(x) ? x : 0);
+  const opts = Array.from({ length: 12 }, (_, i) => {
+    const n = i + 1, C = n * coco.vol;
+    const o = { n, dry: n * coco.size, C,
+      rockB: r === 0 ? 0 : bags(C * r, rock.vol), hullB: r + b >= 1 ? 0 : bags(C * hs, hull.vol),
+      compB: bags(C * 2 / 3, comp.vol), castB: bags(C / 3, cast.vol), barkB: b === 0 ? 0 : bags(C * b, bark.vol) };
+    o.H = C * 3 / (1 - bc); o.gal = o.H * GPC; o.yd = o.H / 27;
+    o.left = (o.rockB * rock.vol - C * r) + (o.hullB * hull.vol - C * hs) + (o.compB * comp.vol - C * 2 / 3) + (o.castB * cast.vol - C / 3) + (o.barkB * bark.vol - C * b);
+    o.leftPct = o.H ? o.left / o.H : 0;
+    o.cost = n * pr(coco.price) + o.rockB * pr(rock.price) + o.hullB * pr(hull.price) + o.compB * pr(comp.price) + o.castB * pr(cast.price) + o.barkB * pr(bark.price);
+    o.premixGal = o.H * cpc / 16; o.potsFilled = pot > 0 ? Math.floor(o.gal / pot) : 0;
+    return o;
+  });
+  const need = pot * pots;
+  const smallest = Math.min(12, opts.filter((o) => o.gal < need).length + 1);
+  const tooBig = need > opts[11].gal;
+  const fits = opts.filter((o) => o.gal >= need);
+  const least = fits.length ? fits.reduce((a, o) => (o.leftPct < a.leftPct - 1e-9 ? o : a)).n : null;
+  const ov = parseInt(p.blocks, 10);
+  const used = ov >= 1 && ov <= 12 ? ov : smallest;
+  const s = opts[used - 1];
+  const shop = [
+    { k: "rock", name: "Aeration rock: " + p.rock, bags: s.rockB, need: s.C * r, bought: s.rockB * rock.vol, cost: s.rockB * pr(rock.price), it: rock },
+    { k: "biochar", name: "Biochar (homemade)", bags: null, need: s.H * bc, bought: null, cost: null },
+    { k: "coco", name: "Coco coir blocks", bags: used, need: s.C, bought: s.C, cost: used * pr(coco.price), it: coco },
+    { k: "compost", name: "Compost", bags: s.compB, need: s.C * 2 / 3, bought: s.compB * comp.vol, cost: s.compB * pr(comp.price), it: comp },
+    { k: "bark", name: "Pine bark fines", bags: s.barkB, need: s.C * b, bought: s.barkB * bark.vol, cost: s.barkB * pr(bark.price), it: bark },
+    { k: "hulls", name: "Rice hulls", bags: s.hullB, need: s.C * hs, bought: s.hullB * hull.vol, cost: s.hullB * pr(hull.price), it: hull },
+    { k: "castings", name: "Worm castings", bags: s.castB, need: s.C / 3, bought: s.castB * cast.vol, cost: s.castB * pr(cast.price), it: cast },
+  ];
+  const customGal = num(p.batchGal);
+  const batchCuft = customGal > 0 ? customGal / GPC : s.H;
+  const premixCups = batchCuft * cpc;
+  const cr = core(), parts = cr.reduce((a, c) => a + c.parts, 0);
+  const premix = cr.map((c) => {
+    const cups = parts ? c.parts / parts * premixCups : 0, lbs = c.cpl > 0 ? cups / c.cpl : 0;
+    const perLb = c.it.size > 0 ? c.it.price / c.it.size : NaN;
+    return { ...c, cups, gal: cups / 16, lbs, perLb, perBag: lbs > 0 ? c.it.size / lbs : NaN, cost: lbs * perLb };
+  });
+  return { p, pot, pots, r, b, hs, bc, cpc, coco, rock, opts, need, smallest, tooBig, least, used, s, shop, customGal, batchCuft, premixCups, premix, parts };
+}
+
+/* ---------- views ---------- */
+const V = {};
+V.plan = (c) => {
+  const { p, s, shop } = c;
+  const aerMsg = c.r + c.b > 1
+    ? `<div class="note warn">Rock + bark is over 100%. Lower one of them.</div>`
+    : `<p class="small">Rice hulls fill the rest: <b>${pct(c.hs)}</b> of the aeration.</p>`;
+  const blockOpts = `<option value="">Auto — ${c.smallest} (fills your pots)</option>` +
+    Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}" ${String(i + 1) === String(p.blocks) ? "selected" : ""}>${i + 1} block${i ? "s" : ""}</option>`).join("");
+  const totNeed = shop.reduce((a, x) => a + x.need, 0), totLeft = shop.reduce((a, x) => a + (x.bought == null ? 0 : x.bought - x.need), 0), totCost = shop.reduce((a, x) => a + (x.cost || 0), 0);
+  return `
+  <section>
+    <h2>Plan a batch</h2>
+    <p class="lede">Coco blocks are the anchor, because you can't buy half a block. Tell the planner your pots and it finds how many whole bags of everything else to buy, with as little left over as possible.</p>
+  </section>
+  <section class="card">
+    <h3>Your pots and recipe</h3>
+    <div class="fields">
+      <label class="field"><span>Pot size (gallons)</span>${inp("plan.potSize", p.potSize, { label: "Pot size in gallons" })}</label>
+      <label class="field"><span>Number of pots</span>${inp("plan.pots", p.pots, { label: "Number of pots" })}</label>
+      <label class="field"><span>Aeration rock</span><select class="in" id="f-plan-rock" data-bind="plan.rock">${["Clay pebbles", "Lava rock"].map((x) => `<option ${x === p.rock ? "selected" : ""}>${x}</option>`).join("")}</select></label>
+      <label class="field"><span>Rock share of aeration (%)</span>${inp("plan.rockPct", p.rockPct, { label: "Rock share of aeration, percent" })}</label>
+      <label class="field"><span>Pine bark share of aeration (%)</span>${inp("plan.barkPct", p.barkPct, { label: "Pine bark share of aeration, percent" })}</label>
+      <label class="field"><span>Biochar (% of total)</span>${inp("plan.biochar", p.biochar, { label: "Biochar percent of total" })}</label>
+      <label class="field"><span>Coco blocks to use</span><select class="in" id="f-plan-blocks" data-bind="plan.blocks">${blockOpts}</select></label>
+    </div>
+    ${aerMsg}
+  </section>
+  ${c.tooBig ? `<div class="note warn">Your pots need more than 12 blocks of soil (${f(c.need, 0)} gal). Plan 2 batches.</div>` : ""}
+  <div class="kpis">
+    <div class="kpi"><span>Soil needed</span><b>${f(c.need, 0)} gal</b><em>${f(c.pots, 0)} pots × ${f(c.pot, 0)} gal</em></div>
+    <div class="kpi"><span>Coco blocks</span><b>${c.used}</b><em>${p.blocks ? "Your pick" : "Smallest batch that fills your pots"}</em></div>
+    <div class="kpi"><span>Base made</span><b>${f(s.gal, 0)} gal</b><em>${f(s.H, 1)} cu ft · ${f(s.yd, 2)} yd³</em></div>
+    <div class="kpi"><span>Cost of bags</span><b>${usd(totCost)}</b><em>Before shipping and tax</em></div>
+    <div class="kpi"><span>Leftover</span><b>${f(s.left * GPC, 1)} gal</b><em>${pct(s.leftPct, 1)} of the batch</em></div>
+  </div>
+
+  <section>
+    <h2>Shopping and mixing list</h2>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Item</th><th class="n">Bags to buy</th><th class="n">Needed (cu ft)</th><th class="n">Needed (gal)</th><th class="n">Bought (cu ft)</th><th class="n">Leftover (gal)</th><th class="n">Cost</th></tr></thead>
+      <tbody>
+      ${shop.map((x) => `<tr>
+        <td class="wide"><span class="name">${esc(x.name)}</span>${x.it ? `<span class="sub-line">${esc(x.it.product)} · ${usd(x.it.price)} each</span>` : `<span class="sub-line">Assumes homemade, so no bags are counted</span>`}</td>
+        <td class="n" data-label="Bags to buy">${x.bags == null ? "—" : x.bags}</td>
+        <td class="n" data-label="Needed (cu ft)">${f(x.need)}</td>
+        <td class="n" data-label="Needed (gal)">${f(x.need * GPC, 1)}</td>
+        <td class="n" data-label="Bought (cu ft)">${x.bought == null ? "—" : f(x.bought)}</td>
+        <td class="n" data-label="Leftover (gal)">${x.bought == null ? "—" : f((x.bought - x.need) * GPC, 1)}</td>
+        <td class="n" data-label="Cost">${x.cost == null ? "—" : usd(x.cost)}</td></tr>`).join("")}
+      <tr class="total"><td class="wide">Total base</td><td></td><td class="n" data-label="Needed (cu ft)">${f(totNeed)}</td><td class="n" data-label="Needed (gal)">${f(totNeed * GPC, 1)}</td><td></td><td class="n" data-label="Leftover (gal)">${f(totLeft * GPC, 1)}</td><td class="n" data-label="Cost">${usd(totCost)}</td></tr>
+      </tbody></table></div>
+    <div class="kpis">
+      <div class="kpi"><span>Coco dry weight to buy</span><b>${f(s.dry, 2)} lb</b></div>
+      <div class="kpi"><span>Premix to add</span><b>${f(totNeed * c.cpc, 1)} cups</b><em>${f(totNeed * c.cpc / 16, 2)} gallons</em></div>
+    </div>
+    <p class="note">This batch fills ${f(totNeed * GPC / (c.pot || 1), 0)} pots of ${f(c.pot, 0)} gal · ${f(totNeed / 27, 1)} cubic yards · about ${f(totNeed * GPC / 5, 0)} five-gallon buckets.</p>
+    <div class="btnrow"><button class="btn" data-act="copy-shop">Copy shopping list</button>${downloads ? `<button class="btn" data-act="csv-shop">Download CSV</button>` : ""}</div>
+  </section>
+
+  <section>
+    <h2>Compare 1 to 12 coco blocks</h2>
+    <p class="small">Tap a row to use that many blocks. Bag counts round up, because you can't buy part of a bag. Leftover is what's still in the bags after mixing. Going up one block sometimes wastes less.</p>
+    <div class="scroll"><table class="opts">
+      <thead><tr><th>Blocks</th><th class="n">Coco dry (lb)</th><th class="n">Base (gal)</th><th class="n">Yd³</th><th class="n">Pots filled</th><th class="n">Rock bags</th><th class="n">Hull bags</th><th class="n">Bark bags</th><th class="n">Compost bags</th><th class="n">Castings bags</th><th class="n">Leftover (gal)</th><th class="n">Leftover %</th><th class="n">Cost of bags</th><th class="n">Premix (gal)</th></tr></thead>
+      <tbody>${c.opts.map((o) => `<tr class="clickable ${o.n === c.used ? "picked" : ""}" data-act="pick-blocks" data-n="${o.n}" tabindex="0">
+        <td><b class="num">${o.n}</b> ${o.n === c.smallest ? '<span class="badge pick">Fills pots</span>' : ""} ${o.n === c.least && o.n !== c.smallest ? '<span class="badge">Least waste</span>' : ""}</td>
+        <td class="n">${f(o.dry)}</td><td class="n">${f(o.gal, 1)}</td><td class="n">${f(o.yd, 2)}</td><td class="n">${o.potsFilled}</td>
+        <td class="n">${o.rockB}</td><td class="n">${o.hullB}</td><td class="n">${o.barkB}</td><td class="n">${o.compB}</td><td class="n">${o.castB}</td>
+        <td class="n">${f(o.left * GPC, 1)}</td><td class="n">${pct(o.leftPct, 1)}</td><td class="n">${usd(o.cost)}</td><td class="n">${f(o.premixGal, 2)}</td></tr>`).join("")}</tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Bag sizes used</h2>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Ingredient</th><th class="n">Expanded size per bag (cu ft)</th><th class="n">Same in gallons</th><th class="n">Price per bag</th></tr></thead>
+      <tbody>${[["Coco coir block (" + f(c.coco.size, 0) + " lb dry)", c.coco], ["Aeration rock: " + p.rock, c.rock], ["Rice hulls", item("rice-hulls")], ["Compost", item("compost-bagged")], ["Worm castings", item("worm-castings")], ["Pine bark fines", item("pine-bark-fines")]].map(([n, it]) => `<tr>
+        <td class="wide"><span class="name">${esc(n)}</span></td><td class="n" data-label="Cu ft per bag">${f(it.vol)}</td><td class="n" data-label="Gallons">${f(it.vol * GPC, 2)}</td><td class="n" data-label="Price">${usd(it.price)}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <p class="small">These come from the Prices tab. Change a size or price there and every number here updates.</p>
+  </section>
+
+  <section class="card">
+    <h3>Tips</h3>
+    <ul class="tips">
+      <li>Measure your coco: hydrate one block in a tote, scoop it out with a 5-gallon bucket and count. Gallons ÷ 7.48 = cu ft. Enter it on the Prices tab as the volume per bag.</li>
+      <li>Coco is sold by dry weight but mixed by volume. A typical 11 lb block makes about 17 gallons wet, roughly 1.5 gallons per pound.</li>
+      <li>The lava rock volume is an estimate, so measure a bag before relying on it.</li>
+      <li>Peat for reference: Premier sells 2.2 and 3.8 cu ft compressed bales. The 3.8 bale fluffs to about 6 cu ft (45 gallons).</li>
+      <li>Buying 15 or more bags of compost? A landscape yard sells it by the cubic yard (27 cu ft) for much less per gallon. Same for rock.</li>
+      <li>Pine bark and rice hulls break down over time. In reused soil, top up both each cycle; the rock never breaks down.</li>
+      <li>Leftover isn't waste. Extra castings become top dressing, and extra compost or aeration starts your next batch.</li>
+    </ul>
+  </section>`;
+};
+
+V.mix = (c) => {
+  const share = (1 - c.bc) / 3;
+  const rows = [
+    ["Aeration: rock (" + c.p.rock.toLowerCase() + ") + rice hulls + pine bark fines", "1", share, "Air pockets so roots breathe. Rock is permanent; hulls add silica; bark feeds fungi. The split is set on Plan & shop."],
+    ["Moisture: coco coir or peat moss", "1", share, "Holds water. Rinse coir first (it can be salty); peat needs dolomite lime."],
+    ["Biology: compost", "⅔ of 1", share * 2 / 3, "Food and microbes; free or cheap locally."],
+    ["Biology: worm castings", "⅓ of 1", share / 3, "Gentle, ready-to-use nutrients and microbes."],
+    ["Biochar (optional, charged)", "—", c.bc, "Holds nutrients and water long-term; houses microbes."],
+  ];
+  const pt = c.premix.reduce((a, x) => ({ cups: a.cups + x.cups, gal: a.gal + x.gal }), { cups: 0, gal: 0 });
+  return `
+  <section>
+    <h2>Base mix</h2>
+    <p class="lede">The body of the soil. Mix this first, then add the premix. Amounts follow the batch from Plan &amp; shop unless you type your own batch size.</p>
+  </section>
+  <section class="card">
+    <div class="fields">
+      <label class="field"><span>Batch size (gallons)</span>${inp("plan.batchGal", c.p.batchGal, { ph: f(c.s.gal, 1) + " from plan", label: "Custom batch size in gallons", over: has(c.p.batchGal) })}</label>
+      <label class="field"><span>Biochar (% of total)</span>${inp("plan.biochar", c.p.biochar, { label: "Biochar percent of total" })}</label>
+      <label class="field"><span>Premix cups per cu ft</span>${inp("plan.cupsPerCuft", c.p.cupsPerCuft, { label: "Premix cups per cubic foot" })}</label>
+    </div>
+    <p class="small">${has(c.p.batchGal) ? `Using your batch size. <button class="btn link" data-act="clear-batch">Go back to the planned batch (${f(c.s.gal, 1)} gal)</button>` : "Leave batch size blank to use the planned batch."} Biochar: use 0–10%, or 0% to skip. Always charge it first (soak in castings or compost tea for 2 weeks).</p>
+  </section>
+  <div class="kpis">
+    <div class="kpi"><span>Batch</span><b>${f(c.batchCuft * GPC, 1)} gal</b></div>
+    <div class="kpi"><span>Cubic feet</span><b>${f(c.batchCuft, 2)}</b><em>gallons ÷ 7.48</em></div>
+    <div class="kpi"><span>Cubic yards</span><b>${f(c.batchCuft / 27, 2)}</b><em>cubic feet ÷ 27</em></div>
+  </div>
+  <section>
+    <h3>Base recipe (by volume)</h3>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Component</th><th class="n">Parts</th><th class="n">Share</th><th class="n">Cu ft</th><th class="n">Gallons</th><th>What it does</th></tr></thead>
+      <tbody>${rows.map(([n, parts, sh, what]) => `<tr><td class="wide"><span class="name">${esc(n)}</span></td><td class="n" data-label="Parts">${parts}</td><td class="n" data-label="Share">${pct(sh, 1)}</td><td class="n" data-label="Cu ft">${f(sh * c.batchCuft)}</td><td class="n" data-label="Gallons">${f(sh * c.batchCuft * GPC, 1)}</td><td class="wide small">${esc(what)}</td></tr>`).join("")}
+      <tr class="total"><td class="wide">Total base</td><td></td><td class="n" data-label="Share">100%</td><td class="n" data-label="Cu ft">${f(c.batchCuft)}</td><td class="n" data-label="Gallons">${f(c.batchCuft * GPC, 1)}</td><td></td></tr></tbody>
+    </table></div>
+  </section>
+  <section>
+    <h3>Premix to add to this batch</h3>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Ingredient</th><th class="n">Parts</th><th class="n">Cups</th><th class="n">Gallons</th></tr></thead>
+      <tbody>${c.premix.map((x) => `<tr><td class="wide"><span class="name">${esc(x.name)}</span></td><td class="n" data-label="Parts">${f(x.parts, 0)}</td><td class="n" data-label="Cups">${f(x.cups, 1)}</td><td class="n" data-label="Gallons">${f(x.gal, 2)}</td></tr>`).join("")}
+      <tr class="total"><td class="wide">Total premix</td><td class="n" data-label="Parts">${f(c.parts, 0)}</td><td class="n" data-label="Cups">${f(pt.cups, 1)}</td><td class="n" data-label="Gallons">${f(pt.gal, 2)}</td></tr></tbody>
+    </table></div>
+    <p class="small">Change the parts on the Premix cost tab.</p>
+  </section>
+  <section class="card">
+    <h3>How to make it</h3>
+    <ol class="steps">
+      <li>Mix the base dry on a tarp or in a bin: aeration (rock, rice hulls, bark), moisture holder, compost, castings, and charged biochar.</li>
+      <li>Blend the premix dry in a separate bucket, then spread it over the base and mix thoroughly.</li>
+      <li>Moisten until it feels like a wrung-out sponge. A squeeze should drip 1–2 drops, no more.</li>
+      <li>Cook: cover and let it sit about 30 days, turning weekly. It should smell earthy, never sour.</li>
+      <li>Before planting, test pH. Below about 6.2 (common with peat), mix in a little dolomite lime.</li>
+    </ol>
+    <p class="note">No time to cook? Layer the pot: amended mix on the bottom ⅔, plain base on top around the young plant.</p>
+  </section>`;
+};
+
+V.prices = () => {
+  const cats = [["Base", (x) => x.cat.startsWith("Base")], ["Premix", (x) => x.cat === "Core premix"], ["Other ingredients", (x) => !x.cat.startsWith("Base") && x.cat !== "Core premix"]];
+  let grand = 0, grandOld = 0, sameNew = 0;
+  const body = cats.map(([label, test]) => {
+    const list = D.items.filter(test).map((b) => item(b.id));
+    const sub = list.reduce((a, x) => a + (isFinite(x.price) ? x.price : 0), 0), subOld = list.reduce((a, x) => a + (x.old || 0), 0);
+    grand += sub; grandOld += subOld; sameNew += list.reduce((a, x) => a + (x.old != null && isFinite(x.price) ? x.price : 0), 0);
+    return `<tr class="group"><td colspan="8">${label}</td></tr>` + list.map((x) => {
+      const o = S.prices[x.id] || {}, isBase = label === "Base", changed = ["size", "vol", "price", "seller"].some((k) => o[k] !== undefined);
+      const per = isFinite(x.price) && x.size > 0 ? x.price / x.size : NaN;
+      return `<tr>
+        <td class="wide"><span class="name">${esc(x.name)}</span> ${x.cat.includes("alternative") ? '<span class="badge">Alternative</span>' : ""} ${x.cat === "Optional" ? '<span class="badge">Optional</span>' : ""}<span class="sub-line">${esc(x.product)}</span></td>
+        <td data-label="Bag size (${esc(x.unit)})">${inp(`prices.${x.id}.size`, has(o.size) ? o.size : x.size, { sm: true, label: x.name + " bag size", over: o.size !== undefined })}<span class="sub-line">${esc(x.unit)}</span></td>
+        <td data-label="Volume per bag (cu ft)">${isBase ? inp(`prices.${x.id}.vol`, has(o.vol) ? o.vol : x.vol, { sm: true, label: x.name + " volume per bag", over: o.vol !== undefined }) : '<span class="small">—</span>'}</td>
+        <td data-label="Price ($)">${inp(`prices.${x.id}.price`, o.price !== undefined ? o.price : x.price, { sm: true, label: x.name + " price", over: o.price !== undefined })}</td>
+        <td class="n" data-label="Price per ${esc(x.unit.replace(" (compressed)", ""))}">${usd(per, per < 1 ? 3 : 2)}</td>
+        <td class="wide" data-label="Seller">${esc(x.seller)} ${x.pickup ? '<span class="badge va">VA pickup</span>' : ""}<span class="sub-line">${esc(x.note || "")}</span></td>
+        <td class="n" data-label="Your old price">${x.old != null ? usd(x.old) : "—"}</td>
+        <td data-label="">${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">Product page</a>` : ""}${changed ? ` <button class="btn link" data-act="reset-price" data-id="${x.id}">Reset</button>` : ""}</td>
+      </tr>`;
+    }).join("") + `<tr class="total"><td class="wide">${label} subtotal</td><td></td><td></td><td class="n" data-label="Price">${usd(sub)}</td><td></td><td></td><td class="n" data-label="Old">${usd(subOld)}</td><td></td></tr>`;
+  }).join("");
+  return `
+  <section>
+    <h2>Price list</h2>
+    <p class="lede">Every ingredient in one place, checked Oct 23–24, 2026, before shipping and tax. This is the only place to change sizes and prices; every other tab reads from here. Edited cells get a green edge and a Reset link.</p>
+  </section>
+  <div class="kpis">
+    <div class="kpi"><span>One bag of everything</span><b>${usd(grand)}</b><em>Your old sheet: ${usd(grandOld)}</em></div>
+    <div class="kpi"><span>Same items, now vs. old</span><b>${usd(sameNew)}</b><em>vs. ${usd(grandOld)} (items that have an old price)</em></div>
+  </div>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Ingredient</th><th>Bag size</th><th>Volume per bag (cu ft)</th><th>Price ($)</th><th class="n">Price per unit</th><th>Seller / backup</th><th class="n">Your old price</th><th></th></tr></thead>
+    <tbody>${body}<tr class="total"><td class="wide">Grand total: one bag of everything</td><td></td><td></td><td class="n" data-label="Price">${usd(grand)}</td><td></td><td></td><td class="n" data-label="Old">${usd(grandOld)}</td><td></td></tr></tbody>
+  </table></div>`;
+};
+
+V.premix = (c) => {
+  const t = c.premix.reduce((a, x) => ({ lbs: a.lbs + x.lbs, cost: a.cost + (isFinite(x.cost) ? x.cost : 0), bag: a.bag + (isFinite(x.it.price) ? x.it.price : 0), min: Math.min(a.min, isFinite(x.perBag) ? x.perBag : Infinity) }), { lbs: 0, cost: 0, bag: 0, min: Infinity });
+  const batchGal = c.batchCuft * GPC;
+  return `
+  <section>
+    <h2>Premix cost</h2>
+    <p class="lede">How far each bag goes and what a batch costs. Uses the batch from the Mix tab (${f(batchGal, 1)} gal of base, ${f(c.premixCups, 1)} cups of premix). The yellow cups-per-lb numbers are estimates: weigh 1 cup of each on a kitchen scale and enter the real number.</p>
+  </section>
+  <div class="kpis">
+    <div class="kpi"><span>Up-front cost</span><b>${usd(t.bag)}</b><em>One large bag of each</em></div>
+    <div class="kpi"><span>Premix for this batch</span><b>${usd(t.cost)}</b><em>${f(t.lbs, 1)} lb in total</em></div>
+    <div class="kpi"><span>Per gallon of soil</span><b>${usd(batchGal ? t.cost / batchGal : NaN, 3)}</b></div>
+    <div class="kpi"><span>Batches before a bag runs out</span><b>${f(t.min, 1)}</b></div>
+  </div>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Ingredient</th><th>Parts</th><th>Cups per lb</th><th class="n">Bag</th><th class="n">Price / lb</th><th class="n">Cups this batch</th><th class="n">Lbs this batch</th><th class="n">Batches per bag</th><th class="n">Cost per batch</th></tr></thead>
+    <tbody>${c.premix.map((x) => `<tr>
+      <td class="wide"><span class="name">${esc(x.name)}</span> ${x.it.pickup ? '<span class="badge va">VA pickup</span>' : ""}<span class="sub-line">${esc(x.it.product)} · ${esc(x.it.seller)}</span></td>
+      <td data-label="Parts">${inp(`premix.parts.${x.name}`, has(S.premix.parts[x.name]) ? S.premix.parts[x.name] : x.parts, { sm: true, label: x.name + " parts" })}</td>
+      <td data-label="Cups per lb">${inp(`premix.cups.${x.name}`, has(S.premix.cups[x.name]) ? S.premix.cups[x.name] : x.cupsPerLb, { sm: true, label: x.name + " cups per pound" })}</td>
+      <td class="n" data-label="Bag">${f(x.it.size, 0)} lb · ${usd(x.it.price)}</td>
+      <td class="n" data-label="Price / lb">${usd(x.perLb, 3)}</td>
+      <td class="n" data-label="Cups this batch">${f(x.cups, 1)}</td>
+      <td class="n" data-label="Lbs this batch">${f(x.lbs, 2)}</td>
+      <td class="n" data-label="Batches per bag">${f(x.perBag, 1)}</td>
+      <td class="n" data-label="Cost per batch">${usd(x.cost)}</td></tr>`).join("")}
+    <tr class="total"><td class="wide">Totals</td><td class="n" data-label="Parts">${f(c.parts, 0)}</td><td></td><td class="n" data-label="Bags">${usd(t.bag)}</td><td></td><td class="n" data-label="Cups">${f(c.premixCups, 1)}</td><td class="n" data-label="Lbs">${f(t.lbs, 2)}</td><td class="n" data-label="Fewest batches">${f(t.min, 1)}</td><td class="n" data-label="Cost">${usd(t.cost)}</td></tr></tbody>
+  </table></div>
+  <section>
+    <h3>Why these ingredients</h3>
+    <p class="small">Selection tests: does more than one job · gentle and slow-release · a single ingredient, not a blend · affordable, easy to find, often a byproduct. Use about 3 cups of premix per cubic foot of base.</p>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Ingredient</th><th>NPK</th><th>What it does</th><th>Why it made the cut</th></tr></thead>
+      <tbody>${D.core.map((x) => `<tr><td class="wide"><span class="name">${esc(x.name)}</span></td><td class="num" data-label="NPK">${esc(x.npk)}</td><td class="wide" data-label="What it does">${esc(x.does)}</td><td class="wide" data-label="Why">${esc(x.why)}</td></tr>`).join("")}</tbody>
+    </table></div>
+  </section>
+  <section class="card">
+    <h3>Saving money</h3>
+    <ul class="tips">
+      <li>Shipping isn't included. A 50 lb bag can cost $20–40 or more to ship, so local pickup (VA pickup) often beats a lower online price.</li>
+      <li>Grow Organic gives 10% off for 3+ bags and 15% for 6+ of the same item. Splitting an order with students or a sponsor gets you there faster.</li>
+      <li>Ask Seven Springs and New Country Organics what else they stock. A quote on several bags at once may get you a better price.</li>
+      <li>Store meals dry, sealed and off the floor. Kept dry, they last for years, so big bags don't go to waste.</li>
+      <li>Pelletized gypsum works fine in soil. The pellets dissolve once the mix is moist.</li>
+    </ul>
+  </section>`;
+};
+
+function bestFor(id) {
+  const q = S.quotes[id] || {};
+  let best = null;
+  GROUPS.forEach((g) => {
+    const e = q[g.k]; if (!e) return;
+    const p = num(e.p, NaN), s = num(e.s, NaN);
+    if (isFinite(p) && isFinite(s) && s > 0) { const u = p / s; if (!best || u < best.u) best = { g, p, s, u }; }
+  });
+  return best;
+}
+V.stores = () => {
+  const called = D.stores.filter((s) => (S.calls[s.n] || {}).called === "Yes").length;
+  const list = D.stores.filter((s) => storeFilter === "all" || (storeFilter === "todo" ? !(S.calls[s.n] || {}).called : !!(S.calls[s.n] || {}).called));
+  const g = GROUPS.find((x) => x.k === quoteGroup);
+  const quoted = D.items.filter((x) => bestFor(x.id)).length;
+  const beats = D.items.filter((x) => { const b = bestFor(x.id), it = item(x.id); return b && it.size > 0 && b.u <= it.price / it.size; }).length;
+  const qCount = (k) => D.items.filter((x) => { const e = (S.quotes[x.id] || {})[k]; return e && has(e.p) && has(e.s); }).length;
+  return `
+  <section>
+    <h2>Local stores</h2>
+    <p class="lede">Your call sheet. Log each call, then enter what each store charges so you can see where to buy. Miles are straight-line from downtown Fredericksburg.</p>
+  </section>
+  <div class="kpis">
+    <div class="kpi"><span>Stores reached</span><b>${called} of ${D.stores.length}</b></div>
+    <div class="kpi"><span>Items with a local quote</span><b>${quoted} of ${D.items.length}</b></div>
+    <div class="kpi"><span>Local beats online</span><b>${beats}</b><em>Online prices don't include shipping</em></div>
+  </div>
+  <section>
+    <div class="chips" role="group" aria-label="Show stores">
+      ${[["all", "All stores"], ["todo", "Not called yet"], ["done", "Called"]].map(([k, l]) => `<button class="chip" data-act="store-filter" data-k="${k}" aria-pressed="${storeFilter === k}">${l}</button>`).join("")}
+    </div>
+    <div class="stores">${list.map((s) => {
+      const c = S.calls[s.n] || {};
+      return `<article class="store ${c.called === "Yes" ? "done" : ""}">
+        <header><div><span class="name">${esc(s.name)}</span><span class="sub-line">${esc(s.type)} · ${f(s.miles, 1)} mi</span></div>${c.called ? `<span class="badge ${c.called === "Yes" ? "pick" : c.called === "Left message" ? "warn" : ""}">${esc(c.called)}</span>` : ""}</header>
+        <div class="meta"><span>${esc(s.addr)}</span><span><span class="phone">${esc(s.phone)}</span> <button class="btn link" data-act="copy" data-text="${esc(s.phone)}">Copy</button>${s.web ? ` · <a href="${esc(s.web)}" target="_blank" rel="noopener">Website</a>` : ""}</span><span>${esc(s.hours)}</span></div>
+        <p class="ask"><b>Ask about:</b> ${esc(s.ask)}</p>
+        <div class="row2">
+          <label class="field"><span>Called?</span><select class="in" id="f-call-${s.n}" data-bind="calls.${s.n}.called">${["", "Yes", "No", "Left message"].map((o) => `<option value="${o}" ${o === (c.called || "") ? "selected" : ""}>${o || "Not yet"}</option>`).join("")}</select></label>
+          <label class="field"><span>Date</span><input type="date" class="in" id="f-date-${s.n}" data-bind="calls.${s.n}.date" value="${esc(c.date || "")}"></label>
+        </div>
+        <label class="field"><span>Your notes</span><textarea class="in" id="f-notes-${s.n}" data-bind="calls.${s.n}.notes" rows="2" placeholder="Who you talked to, quotes, call-back time">${esc(c.notes || "")}</textarea></label>
+      </article>`; }).join("") || `<p class="small">No stores match this filter.</p>`}</div>
+  </section>
+
+  <section>
+    <h2>Price comparison</h2>
+    <p class="small">Pick a store, then enter the price for one bag and its size (lbs or cu ft, as shown). Leave blank if they don't carry it. Price per unit makes a big bag and a small bag compare fairly. Add gas or delivery when comparing to online.</p>
+    <div class="chips" role="group" aria-label="Store to enter quotes for">${GROUPS.map((x) => `<button class="chip" data-act="quote-group" data-k="${x.k}" aria-pressed="${x.k === quoteGroup}">${esc(x.name)}<span class="ct">${qCount(x.k) || ""}</span></button>`).join("")}</div>
+    <p class="small">Entering prices for <b>${esc(g.name)}</b>: ${g.stores.map((n) => esc(D.stores[n - 1].name)).join(", ")}.</p>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Ingredient</th><th>${esc(g.name)} bag $</th><th>Bag size</th><th class="n">Online per unit</th><th>Cheapest so far</th><th>Beats online?</th></tr></thead>
+      <tbody>${[["Base", (x) => x.cat.startsWith("Base")], ["Premix", (x) => x.cat === "Core premix"], ["Other ingredients", (x) => !x.cat.startsWith("Base") && x.cat !== "Core premix"]].map(([label, test]) =>
+        `<tr class="group"><td colspan="6">${label}</td></tr>` + D.items.filter(test).map((b) => {
+          const it = item(b.id), e = (S.quotes[b.id] || {})[g.k] || {}, best = bestFor(b.id), online = it.size > 0 ? it.price / it.size : NaN, u = it.unit.replace(" (compressed)", "");
+          return `<tr>
+            <td class="wide"><span class="name">${esc(b.short || b.name)}</span><span class="sub-line">Online: ${usd(it.price)} for ${f(it.size, it.size % 1 ? 2 : 0)} ${esc(it.unit)}</span></td>
+            <td data-label="Bag $">${inp(`quotes.${b.id}.${g.k}.p`, e.p || "", { sm: true, label: `${b.name} bag price at ${g.name}` })}</td>
+            <td data-label="Size (${esc(u)})">${inp(`quotes.${b.id}.${g.k}.s`, e.s || "", { sm: true, ph: u, label: `${b.name} bag size at ${g.name}` })}</td>
+            <td class="n" data-label="Online per ${esc(u)}">${usd(online, online < 1 ? 3 : 2)}</td>
+            <td data-label="Cheapest">${best ? `<b>${esc(best.g.name)}</b><span class="sub-line">${usd(best.p)} for ${f(best.s, best.s % 1 ? 2 : 0)} · ${usd(best.u, best.u < 1 ? 3 : 2)}/${esc(u)}</span>` : '<span class="small">No quotes yet</span>'}</td>
+            <td data-label="Beats online?">${best ? (best.u <= online ? '<span class="badge pick">Yes — buy local</span>' : '<span class="badge">No — online is cheaper</span>') : ""}</td></tr>`;
+        }).join("")).join("")}</tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h3>What to say when you call</h3>
+    <p class="script">"Hi, I'm putting together an organic soil mix and wanted to check what you carry. Do you stock any of these, and in what bag size and price?"</p>
+    <ul class="tips">
+      <li>Read them the ingredient list above. Ask for the bag size and price; the comparison does the dividing.</li>
+      <li>Ask: "Can you special-order anything you don't stock?" and "Is there a discount if I buy several bags?" Mention the course or a group order.</li>
+      <li>For bulk yards, ask the price per cubic yard, the delivery fee to your address, the minimum order, and whether the compost is finished and cured.</li>
+      <li>Note who you talked to and any quotes so you can call back.</li>
+    </ul>
+  </section>`;
+};
+
+V.guide = () => `
+  <section>
+    <h2>Other ingredients</h2>
+    <p class="lede">Targeted tools: use them at a specific stage or to fix a specific problem. Price per lb comes from the Prices tab.</p>
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Ingredient</th><th>NPK</th><th class="n">Price per lb</th><th>What it's good for</th><th>Best use / stage</th><th>Notes</th></tr></thead>
+      <tbody>${D.other.map((o) => { const b = D.items.find((x) => x.name === o.name || x.short === o.name), it = b ? item(b.id) : null, per = it && it.size > 0 ? it.price / it.size : NaN;
+        return `<tr><td class="wide"><span class="name">${esc(o.name)}</span></td><td class="num" data-label="NPK">${esc(o.npk)}</td><td class="n" data-label="Price per lb">${usd(per, per < 1 ? 3 : 2)}</td><td class="wide" data-label="Good for">${esc(o.good)}</td><td data-label="Best use">${esc(o.use)}</td><td data-label="Notes">${esc(o.notes || "")}</td></tr>`; }).join("")}</tbody>
+    </table></div>
+  </section>
+  <section>
+    <h2>Combinations worth testing</h2>
+    <p class="small">A/B test: two beds, same strain, change one ingredient at a time. Log what you see here.</p>
+    ${D.combos.map((x, i) => { const t = S.tests[i] || {}; return `<article class="card combo">
+      <div><span class="name">${esc(x.name)}</span><span class="sub-line">${esc(x.ing)}</span></div>
+      <p>${esc(x.idea)}</p><p class="small">${esc(x.ev)}</p>
+      <div class="row2">
+        <label class="field"><span>Your results (Bed A)</span><textarea class="in" id="f-test-${i}-a" data-bind="tests.${i}.a" rows="2">${esc(t.a || "")}</textarea></label>
+        <label class="field"><span>Your results (Bed B)</span><textarea class="in" id="f-test-${i}-b" data-bind="tests.${i}.b" rows="2">${esc(t.b || "")}</textarea></label>
+      </div></article>`; }).join("")}
+  </section>
+  <section class="card">
+    <h2>The honest part</h2>
+    <p>Genetics set the ceiling for yield, terpenes and cannabinoids. Soil decides whether the plant reaches it.</p>
+    <p><b>Biggest flavor and potency factors:</b></p>
+    <ul class="tips"><li>Light intensity</li><li>Cooler night temperatures in late flower</li><li>Harvest timing</li><li>A slow dry and cure</li><li>Not overfeeding nitrogen late in flower (it hurts smell and taste)</li></ul>
+    <p class="small">Costs and NPK values come from your original "Super Soil Mix" sheet and may be out of date.</p>
+  </section>`;
+
+/* ---------- rendering ---------- */
+function patchChildren(a, b) {
+  const ac = [...a.childNodes], bc = [...b.childNodes];
+  bc.forEach((n, i) => { if (i < ac.length) patch(ac[i], n); else a.appendChild(n); });
+  for (let i = bc.length; i < ac.length; i++) ac[i].remove();
+}
+function patch(a, b) {
+  if (a.nodeType !== b.nodeType || a.nodeName !== b.nodeName) { a.replaceWith(b); return; }
+  if (a.nodeType === 3 || a.nodeType === 8) { if (a.nodeValue !== b.nodeValue) a.nodeValue = b.nodeValue; return; }
+  if (a.nodeType !== 1) return;
+  [...a.attributes].forEach((at) => { if (!b.hasAttribute(at.name)) a.removeAttribute(at.name); });
+  [...b.attributes].forEach((at) => { if (a.getAttribute(at.name) !== at.value) a.setAttribute(at.name, at.value); });
+  const tag = a.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA") { if (a !== document.activeElement && a.value !== b.value) a.value = b.value; return; }
+  patchChildren(a, b);
+  if (tag === "SELECT" && a !== document.activeElement && a.value !== b.value) a.value = b.value;
+}
+let raf = 0, lastTab = null;
+function render() {
+  cancelAnimationFrame(raf);
+  raf = requestAnimationFrame(() => {
+    const html = V[tab](compute()), app = $("#app");
+    if (lastTab !== tab) { app.innerHTML = html; lastTab = tab; return; }
+    const t = document.createElement("div"); t.innerHTML = html; patchChildren(app, t);
+  });
+}
+function route() {
+  const h = location.hash.slice(1);
+  tab = V[h] ? h : "plan";
+  document.querySelectorAll("#tabs a").forEach((a) => a.setAttribute("aria-current", a.getAttribute("href") === "#" + tab ? "page" : "false"));
+  render();
+  if (lastTab !== null) window.scrollTo(0, 0);
+}
+
+/* ---------- saving ---------- */
+const timers = {}, inflight = {};
+function setStatus(m) { $("#status").textContent = m; }
+function queueSave(key) { clearTimeout(timers[key]); timers[key] = setTimeout(() => flush(key), 700); setStatus("Saving…"); }
+async function flush(key) {
+  delete timers[key];
+  if (!db) {
+    try { localStorage.setItem("soil-guide:" + key, JSON.stringify(S[key])); setStatus("Saved on this device only"); } catch { setStatus("Changes aren't being saved here"); }
+    return;
+  }
+  if (inflight[key]) { inflight[key].again = true; return; }
+  inflight[key] = { again: false };
+  try { await db.doc("app/" + key).set(S[key]); if (!Object.keys(timers).length) setStatus("All changes saved"); }
+  catch (e) {
+    setStatus(e && e.code === "invalid_argument" ? "You can view this, but your changes won't be saved" : "Couldn't save. Check your connection; your next edit will retry.");
+  }
+  const again = inflight[key].again; delete inflight[key];
+  if (again) flush(key);
+}
+function merge(key, data) {
+  const d = JSON.parse(JSON.stringify(DEF[key]));
+  return key === "plan" || key === "premix" ? { ...d, ...data } : { ...data };
+}
+
+/* ---------- events ---------- */
+function onField(e) {
+  const el = e.target.closest("[data-bind]"); if (!el) return;
+  const path = el.dataset.bind, key = path.split(".")[0];
+  setPath(S, path, el.value);
+  queueSave(key);
+  render();
+}
+const app = $("#app");
+app.addEventListener("input", onField);
+app.addEventListener("change", (e) => { if (e.target.tagName === "SELECT" || e.target.type === "date") onField(e); });
+app.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("tr[data-act]")) { e.preventDefault(); e.target.click(); } });
+app.addEventListener("click", async (e) => {
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  const a = el.dataset.act;
+  if (a === "pick-blocks") { S.plan.blocks = el.dataset.n === String(compute().smallest) ? "" : el.dataset.n; queueSave("plan"); render(); toast(`Using ${el.dataset.n} coco block${el.dataset.n === "1" ? "" : "s"}`); }
+  else if (a === "clear-batch") { S.plan.batchGal = ""; queueSave("plan"); render(); }
+  else if (a === "reset-price") { delete S.prices[el.dataset.id]; queueSave("prices"); render(); toast("Back to the sheet's price"); }
+  else if (a === "store-filter") { storeFilter = el.dataset.k; render(); }
+  else if (a === "quote-group") { quoteGroup = el.dataset.k; render(); }
+  else if (a === "copy") copy(el.dataset.text, "Copied");
+  else if (a === "copy-shop") copy(shopText(), "Shopping list copied");
+  else if (a === "csv-shop") { try { await downloads.save({ filename: "soil-shopping-list.csv", data: shopCsv() }); } catch { /* declined */ } }
+});
+function copy(text, msg) {
+  navigator.clipboard.writeText(text).then(() => toast(msg), () => toast("Copy isn't available here. Select the text and copy it."));
+}
+function shopText() {
+  const c = compute();
+  const lines = [`Soil batch: ${c.used} coco blocks → ${f(c.s.gal, 0)} gal base (${f(c.s.yd, 2)} yd³)`, ""];
+  c.shop.filter((x) => x.bags != null).forEach((x) => lines.push(`${x.name}: ${x.bags} bag${x.bags === 1 ? "" : "s"}${x.it ? ` (${x.it.product}, ${usd(x.it.price)} each)` : ""} = ${usd(x.cost)}`));
+  lines.push(`Biochar (homemade): ${f(c.shop[1].need, 2)} cu ft`, `Total bags: ${usd(c.shop.reduce((a, x) => a + (x.cost || 0), 0))}`, "", `Premix (${f(c.premixCups, 1)} cups):`);
+  c.premix.forEach((x) => lines.push(`  ${x.name}: ${f(x.cups, 1)} cups`));
+  return lines.join("\n");
+}
+function shopCsv() {
+  const c = compute(), q = (v) => /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
+  const rows = [["Item", "Bags to buy", "Needed (cu ft)", "Needed (gal)", "Bought (cu ft)", "Leftover (gal)", "Cost ($)"]];
+  c.shop.forEach((x) => rows.push([x.name, x.bags ?? "", x.need.toFixed(2), (x.need * GPC).toFixed(1), x.bought == null ? "" : x.bought.toFixed(2), x.bought == null ? "" : ((x.bought - x.need) * GPC).toFixed(1), x.cost == null ? "" : x.cost.toFixed(2)]));
+  rows.push([], ["Premix ingredient", "Cups", "Lbs", "Cost ($)"]);
+  c.premix.forEach((x) => rows.push([x.name, x.cups.toFixed(1), x.lbs.toFixed(2), isFinite(x.cost) ? x.cost.toFixed(2) : ""]));
+  return rows.map((r) => r.map(q).join(",")).join("\n");
+}
+
+window.addEventListener("hashchange", route);
+route();
+
+(async () => {
+  const [d, dl] = await Promise.all(["db", "downloads"].map((n) => (window.claude?.use ? window.claude.use(n) : Promise.resolve(null))));
+  downloads = dl;
+  if (!d) {
+    KEYS.forEach((k) => { try { const v = localStorage.getItem("soil-guide:" + k); if (v) S[k] = merge(k, JSON.parse(v)); } catch { /* unavailable */ } });
+    setStatus("Saving on this device only");
+    lastTab = null; render();
+    return;
+  }
+  db = d;
+  let first = KEYS.length;
+  KEYS.forEach((k) => db.doc("app/" + k).onSnapshot((snap) => {
+    if (timers[k] || inflight[k] || snap.metadata.hasPendingWrites) return;
+    if (snap.exists) S[k] = merge(k, JSON.parse(JSON.stringify(snap.data())));
+    if (first > 0 && --first === 0) setStatus("All changes saved");
+    render();
+  }, () => setStatus("Lost the connection. Reload to keep saving.")));
+  render();
+})();
+</script>
+
+</body>
+</html>
