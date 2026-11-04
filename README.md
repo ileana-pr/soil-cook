@@ -11,19 +11,25 @@ A planner for mixing organic living soil. You tell it your pots, and it works ou
 - **Local stores:** a call sheet for Fredericksburg-area stores (log calls and notes) plus a price comparison that finds the cheapest store per ingredient and checks it against online prices.
 - **Guide:** other ingredients, combinations to A/B test with a results log, and notes.
 
-Your edits are saved in your browser on the device you use (local storage). They don't sync between devices.
+Run it with the local server and your edits, plus the store list, live in a database file on this computer (`db/soil.sqlite`). Open the file by itself and edits stay in the browser instead. Nothing syncs between devices.
+
+Specs for the app live in `docs/`. That folder is private: the server will not show it, and it is left out of git and of the Vercel site.
 
 ## Run it
 
-It's a single static file with no build step. Open `index.html` in a browser, or serve the folder:
+From this folder:
 
 ```sh
-python3 -m http.server 8000
+python3 server.py
 ```
+
+Then open http://127.0.0.1:8000 . The server only listens on this computer. The first run creates `db/soil.sqlite` and fills the supplier list from `db/seed-suppliers.json`.
+
+The page is still a single file with no build step. Opening `index.html` directly, or `python3 -m http.server 8000`, skips the database and saves in the browser.
 
 ## Deploy
 
-Hosted on Vercel as a static site, with no build step.
+Hosted on Vercel as a static site, with no build step. The public site does not include `docs/` or the database. Saving there stays in the browser.
 
 ```sh
 vercel          # first run: links the folder to a Vercel project and makes a preview

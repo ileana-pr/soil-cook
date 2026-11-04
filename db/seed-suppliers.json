@@ -1,0 +1,189 @@
+[
+  {
+    "id": 1,
+    "name": "Tractor Supply Co.",
+    "type": "Farm store",
+    "address": "4179 Plank Rd, Fredericksburg 22407",
+    "phone": "540-785-5775",
+    "website": "https://www.tractorsupply.com/tsc/store_Fredericksburg-VA-22407_695",
+    "hours": "Mon–Sat 8–9; Sun 9–7",
+    "miles": 4.1,
+    "ask_about": "Gypsum (Soft Cal 40 lb), dolomite lime, Epsom salt, oyster shell, alfalfa pellets (no additives), blood/bone meal"
+  },
+  {
+    "id": 2,
+    "name": "Agri-Service, LLC",
+    "type": "Feed store",
+    "address": "91 Chriswood Ln, Stafford 22556",
+    "phone": "540-752-2667",
+    "website": null,
+    "hours": "Wed–Fri 9–4; Sat 9–12; Sun–Tue closed",
+    "miles": 10.8,
+    "ask_about": "Alfalfa meal/pellets, oyster shell, feed-grade kelp, 50 lb bags. Will they special-order meals or Azomite?"
+  },
+  {
+    "id": 3,
+    "name": "Lowe's — Carl D Silver Pkwy",
+    "type": "Home improvement",
+    "address": "1361 Carl D Silver Pkwy, Fredericksburg 22401",
+    "phone": "540-786-9050",
+    "website": "https://www.lowes.com",
+    "hours": "Mon–Sat 6am–10pm; Sun 7–8",
+    "miles": 2.5,
+    "ask_about": "Leafgro compost, pine bark fines ('soil conditioner'), peat, perlite, Epsom salt, gypsum, small bags of meals. Check stock on Lowes.com."
+  },
+  {
+    "id": 4,
+    "name": "Lowe's — Southpoint",
+    "type": "Home improvement",
+    "address": "10101 Southpoint Pkwy, Fredericksburg 22407",
+    "phone": "540-369-9000",
+    "website": "https://www.lowes.com",
+    "hours": "Mon–Sat 6am–10pm; Sun 8–8",
+    "miles": 5.1,
+    "ask_about": "Same as above"
+  },
+  {
+    "id": 5,
+    "name": "Lowe's — Banks Ford",
+    "type": "Home improvement",
+    "address": "299 Banks Ford Pkwy, Fredericksburg 22406",
+    "phone": "540-371-2686",
+    "website": "https://www.lowes.com",
+    "hours": "Mon–Sat 6am–10pm; Sun 8–8",
+    "miles": 4.9,
+    "ask_about": "Same as above"
+  },
+  {
+    "id": 6,
+    "name": "Home Depot — Gateway Blvd",
+    "type": "Home improvement",
+    "address": "1201 Gateway Blvd, Fredericksburg 22401",
+    "phone": "540-368-0515",
+    "website": "https://www.homedepot.com",
+    "hours": "Mon–Sat 6am–10pm; Sun 8–8",
+    "miles": 2.4,
+    "ask_about": "Leafgro compost, pine bark soil conditioner, biochar (Wakefield), peat, Epsom salt, small bags of meals. Check stock on HomeDepot.com."
+  },
+  {
+    "id": 7,
+    "name": "Home Depot — Plank Rd",
+    "type": "Home improvement",
+    "address": "5771 Plank Rd, Fredericksburg 22407",
+    "phone": "540-785-8871",
+    "website": "https://www.homedepot.com",
+    "hours": "Mon–Sat 6am–10pm; Sun 8–8",
+    "miles": 6,
+    "ask_about": "Same as above"
+  },
+  {
+    "id": 8,
+    "name": "Meadows Farms — Plank Rd",
+    "type": "Garden center",
+    "address": "5043 Plank Rd, Fredericksburg 22407",
+    "phone": "540-786-8171",
+    "website": null,
+    "hours": "Mon–Fri 8–7; Sat 9–7; Sun 9–6",
+    "miles": 4.9,
+    "ask_about": "Bagged compost, pine bark soil conditioner, organic fertilizers (ask about Espoma or similar)"
+  },
+  {
+    "id": 9,
+    "name": "Meadows Farms — Patriot Hwy",
+    "type": "Garden center",
+    "address": "8424 Patriot Hwy, Fredericksburg 22407",
+    "phone": "540-710-8999",
+    "website": null,
+    "hours": "Mon–Fri 8–6; Sat–Sun 9–6",
+    "miles": 8.3,
+    "ask_about": "Same as above"
+  },
+  {
+    "id": 10,
+    "name": "Remington Mulch & Firewood",
+    "type": "Bulk soil & compost yard",
+    "address": "4821 Massaponax Church Rd, Fredericksburg 22407",
+    "phone": "703-560-2275",
+    "website": "http://www.remingtonmulch.com/",
+    "hours": "Mon–Fri 7–5; Sat 7–2",
+    "miles": 7.8,
+    "ask_about": "Bulk leaf compost / mushroom compost per yard, pine fines, delivery fee. Ask for FINISHED, cured compost."
+  },
+  {
+    "id": 11,
+    "name": "Acors Topsoil and Mulch",
+    "type": "Bulk soil & compost yard",
+    "address": "6601 Macklin Dr, Spotsylvania 22553",
+    "phone": "540-891-2431",
+    "website": "http://www.acorstopsoilandmulch.com/",
+    "hours": "Mon–Fri 7:30–5; Sat 8–2",
+    "miles": 7.1,
+    "ask_about": "Bulk compost per yard, pine fines, delivery fee"
+  },
+  {
+    "id": 12,
+    "name": "Tumbleweed Gardens",
+    "type": "Bulk soil, compost & stone",
+    "address": "637 Kings Hwy, Fredericksburg 22405",
+    "phone": "540-899-9004",
+    "website": "https://tumbleweedgardenssheds.com/",
+    "hours": "Mon–Fri 8–5; Sat 8–3; Sun 10–3",
+    "miles": 2.7,
+    "ask_about": "Bulk compost per yard; you can see the piles before buying"
+  },
+  {
+    "id": 13,
+    "name": "Stone & Mulch Center",
+    "type": "Landscape stone & mulch",
+    "address": "78 Shelton Shop Rd, Stafford 22554",
+    "phone": "540-657-5454",
+    "website": null,
+    "hours": "Mon–Fri 7–6; Sat 8–5; Sun 9–3",
+    "miles": 11.2,
+    "ask_about": "Small screened lava rock / lava fines, pine fines; will they order it?"
+  },
+  {
+    "id": 14,
+    "name": "Jay's Brewing (homebrew shop)",
+    "type": "Homebrew supply",
+    "address": "9790 Center St, Manassas, VA 20110",
+    "phone": "703-361-2908",
+    "website": null,
+    "hours": "Tue–Fri 11–4; Sat 10–5; Sun–Mon closed",
+    "miles": 31.2,
+    "ask_about": "Malted barley (2-row) — ask them to mill/grind it. Buy 5–10 lb."
+  },
+  {
+    "id": 15,
+    "name": "Hydrokulture (compare only)",
+    "type": "Grow store",
+    "address": "328 Emancipation Hwy, Fredericksburg 22401",
+    "phone": "540-940-6962",
+    "website": "https://thehydrokulture.com/",
+    "hours": "Mon–Sat 11–7; Sun closed",
+    "miles": 1.1,
+    "ask_about": "Only to compare prices on coco blocks, clay pebbles, castings, Mykos"
+  },
+  {
+    "id": 16,
+    "name": "New Country Organics (day trip)",
+    "type": "Organic fertilizer mill",
+    "address": "801 2nd St, Waynesboro, VA",
+    "phone": "888-699-7088",
+    "website": "https://www.newcountryorganics.com/find-us",
+    "hours": "Order ahead; pickup next business day",
+    "miles": 79.3,
+    "ask_about": "Azomite $28.95/44 lb, alfalfa meal $35.95/50 lb — ask what else they stock"
+  },
+  {
+    "id": 17,
+    "name": "Seven Springs Farm Supply (day trip)",
+    "type": "Organic farm supply",
+    "address": "426 Jerry Lane NE, Check, VA",
+    "phone": "540-651-3228",
+    "website": "https://www.7springsfarm.com/",
+    "hours": "Call ahead",
+    "miles": 169.7,
+    "ask_about": "Rice hulls $32.50/50 lb, bone meal $42.90, fishbone $67.90, feather $38.20, blood $66, greensand — quote for a group order"
+  }
+]

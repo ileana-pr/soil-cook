@@ -1,1 +1,6 @@
 .vercel
+docs/
+db/*.sqlite
+db/*.sqlite-journal
+db/*.sqlite-wal
+db/*.sqlite-shm

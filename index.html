@@ -666,6 +666,23 @@ function route() {
 /* ---------- saving ---------- */
 const timers = {}, inflight = {};
 function setStatus(m) { $("#status").textContent = m; }
+function serverDb() {
+  return {
+    doc(path) {
+      const key = path.split("/")[1];
+      return {
+        async set(data) {
+          const res = await fetch("/api/user/" + key, {
+            method: "PUT",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error("save failed");
+        },
+      };
+    },
+  };
+}
 function queueSave(key) { clearTimeout(timers[key]); timers[key] = setTimeout(() => flush(key), 700); setStatus("Saving…"); }
 async function flush(key) {
   delete timers[key];
@@ -734,11 +751,36 @@ function shopCsv() {
 window.addEventListener("hashchange", route);
 route();
 
+function loadLocal() {
+  KEYS.forEach((k) => { try { const v = localStorage.getItem("soil-guide:" + k); if (v) S[k] = merge(k, JSON.parse(v)); } catch { /* unavailable */ } });
+}
 (async () => {
   const [d, dl] = await Promise.all(["db", "downloads"].map((n) => (window.claude?.use ? window.claude.use(n) : Promise.resolve(null))));
   downloads = dl;
   if (!d) {
-    KEYS.forEach((k) => { try { const v = localStorage.getItem("soil-guide:" + k); if (v) S[k] = merge(k, JSON.parse(v)); } catch { /* unavailable */ } });
+    try {
+      const res = await fetch("/api/state");
+      if (!res.ok) throw new Error("no database");
+      const state = await res.json();
+      if (Array.isArray(state.suppliers) && state.suppliers.length) D.stores = state.suppliers;
+      const saved = state.user || {};
+      const fromDb = KEYS.some((k) => saved[k]);
+      KEYS.forEach((k) => { if (saved[k]) S[k] = merge(k, saved[k]); });
+      db = serverDb();
+      let moved = false;
+      if (!fromDb) {
+        KEYS.forEach((k) => {
+          let raw = null;
+          try { raw = localStorage.getItem("soil-guide:" + k); } catch { /* unavailable */ }
+          if (!raw) return;
+          try { S[k] = merge(k, JSON.parse(raw)); moved = true; queueSave(k); } catch { /* bad saved note */ }
+        });
+      }
+      setStatus(fromDb ? "Saved in the database on this computer" : moved ? "Moved this browser's notes into the database" : "Saving to the database on this computer");
+      lastTab = null; render();
+      return;
+    } catch { /* file opened directly, or a server with no database */ }
+    loadLocal();
     setStatus("Saving on this device only");
     lastTab = null; render();
     return;
